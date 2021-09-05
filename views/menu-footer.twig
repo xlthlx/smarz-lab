@@ -1,0 +1,8 @@
+{% if menu %}
+	{% for item in items %}
+		<span class="badge bg-dark text-white rounded-0 border-0 fw-bold pt-2">|</span>
+		<a class="{{ item.classes | join(' ') }}" target="{{ item.target }}" href="{{ item.link }}">
+			{{ item.title }}
+		</a>&nbsp;
+	{% endfor %}
+{% endif %}

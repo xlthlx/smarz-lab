@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="display-5 pb-3">News</h2>
+                <hr class="pt-0 mt-0 mb-4"/>
+            </div>
+            <div class="col-md-8">
+
+                {% for post in posts %}
+                    {% include ['tease.twig'] %}
+                {% endfor %}
+
+            </div>
+
+            <aside class="col-md-4 sidebar px-5">
+                {% if sidebar %}
+                    {{ sidebar }}
+                {% endif %}
+            </aside>
+
+        </div>
+
+    </div>
+
+    {% include 'partial/pagination.twig' with { pagination: posts.pagination({show_all: false, mid_size: 3, end_size: 2}) } %}
+
+{% endblock %}
