@@ -15,26 +15,28 @@
                 </div>
 
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-                    {% for item in items.Pagina %}
-                        {% for card in item %}
+					{% if items.Pagina %}
+						{% for item in items.Pagina %}
+							{% for card in item %}
 
-                            <div class="col">
-                                <div class="card h-100">
-                                    <img alt="{{ card.Titolo }}" src="{{ card.Immagine }}"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ card.Titolo }}</h5>
-                                        <p class="card-text">{{ card.Descrizione }}</p>
-                                        <p class="card-text">Prezzo: {{ card.Prezzo }}</p>
-                                        <a href="{{ card.Link }}" target="_blank">Compra su eBay</a>
-                                    </div>
-                                    <div class="card-footer">
-                                        <small class="text-muted">{{ card.Stato }}</small>
-                                    </div>
-                                </div>
-                            </div>
+								<div class="col">
+									<div class="card h-100">
+										<img alt="{{ card.Titolo }}" src="{{ card.Immagine }}"/>
+										<div class="card-body">
+											<h5 class="card-title">{{ card.Titolo }}</h5>
+											<p class="card-text">{{ card.Descrizione }}</p>
+											<p class="card-text">Prezzo: {{ card.Prezzo }}</p>
+											<a href="{{ card.Link }}" target="_blank">Compra su eBay</a>
+										</div>
+										<div class="card-footer">
+											<small class="text-muted">{{ card.Stato }}</small>
+										</div>
+									</div>
+								</div>
 
-                        {% endfor %}
-                    {% endfor %}
+							{% endfor %}
+						{% endfor %}
+					{% endif %}
                 </div>
 
             </div>

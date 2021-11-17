@@ -11,6 +11,7 @@ function get_all_items() {
 
 	$service = new Services\FindingService( [
 		'credentials' => $config['production']['credentials'],
+		'authToken' => $config['production']['authToken'],
 		'globalId'    => Constants\GlobalIds::IT
 	] );
 
@@ -31,24 +32,27 @@ function get_all_items() {
 
 	if ( isset( $response->errorMessage ) ) {
 		foreach ( $response->errorMessage->error as $error ) {
-			printf(
+			error_log( printf(
 				"%s: %s\n\n",
 				$error->severity === Enums\ErrorSeverity::C_ERROR ? 'Error' : 'Warning',
 				$error->message
-			);
+			) );
 		}
 	}
 
 
 	if ( $response->ack !== 'Failure' ) {
 
-		$return['Totale'] = $response->paginationOutput->totalEntries;
+		$total = $response->paginationOutput->totalEntries;
+		$return['Totale'] = $total;
 		$return['Pagine'] = $response->paginationOutput->totalPages;
 
-		foreach ( $response->searchResult->item as $item ) {
+		if($total!==0) {
+			foreach ( $response->searchResult->item as $item ) {
 
-			$return['Pagina'][1][ $item->itemId ] = get_single_item($item->itemId);
+				$return['Pagina'][1][ $item->itemId ] = get_single_item($item->itemId);
 
+			}
 		}
 	}
 

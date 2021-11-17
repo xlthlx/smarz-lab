@@ -10,6 +10,7 @@ function get_single_item( $sku ) {
 	$return = [];
 
 	$service = new Services\ShoppingService( [
+		'authToken' => $config['production']['authToken'],
 		'credentials' => $config['production']['credentials']
 	] );
 	$request = new Types\GetSingleItemRequestType();
@@ -21,12 +22,12 @@ function get_single_item( $sku ) {
 
 	if ( isset( $response->Errors ) ) {
 		foreach ( $response->Errors as $error ) {
-			printf(
-				"%s: %s\n%s\n\n",
+			error_log(printf(
+				"%s: %s<br/>%s<br/><br/>",
 				$error->SeverityCode === Enums\SeverityCodeType::C_ERROR ? 'Error' : 'Warning',
 				$error->ShortMessage,
 				$error->LongMessage
-			);
+			));
 		}
 	}
 
