@@ -3,7 +3,6 @@
 use DTS\eBaySDK\Constants;
 use DTS\eBaySDK\Finding\Services;
 use DTS\eBaySDK\Finding\Types;
-use DTS\eBaySDK\Finding\Enums;
 
 function get_all_items() {
 	global $config;
@@ -11,7 +10,7 @@ function get_all_items() {
 
 	$service = new Services\FindingService( [
 		'credentials' => $config['production']['credentials'],
-		'authToken' => $config['production']['authToken'],
+		'authToken'   => get_oauth(),
 		'globalId'    => Constants\GlobalIds::IT
 	] );
 
@@ -21,8 +20,8 @@ function get_all_items() {
 		'value' => [ 'a.pigeons' ]
 	] );
 
-	$request->sortOrder = 'CurrentPriceHighest';
-	$request->categoryId = ['58058'];
+	$request->sortOrder  = 'CurrentPriceHighest';
+	$request->categoryId = [ '58058' ];
 
 	$request->paginationInput                 = new Types\PaginationInput();
 	$request->paginationInput->entriesPerPage = 9;
@@ -32,25 +31,21 @@ function get_all_items() {
 
 	if ( isset( $response->errorMessage ) ) {
 		foreach ( $response->errorMessage->error as $error ) {
-			error_log( printf(
-				"%s: %s\n\n",
-				$error->severity === Enums\ErrorSeverity::C_ERROR ? 'Error' : 'Warning',
-				$error->message
-			) );
+			$return['error'][ $error->message ] = $error->message;
 		}
 	}
 
 
 	if ( $response->ack !== 'Failure' ) {
 
-		$total = $response->paginationOutput->totalEntries;
+		$total            = $response->paginationOutput->totalEntries;
 		$return['Totale'] = $total;
 		$return['Pagine'] = $response->paginationOutput->totalPages;
 
-		if($total!==0) {
+		if ( $total !== 0 ) {
 			foreach ( $response->searchResult->item as $item ) {
 
-				$return['Pagina'][1][ $item->itemId ] = get_single_item($item->itemId);
+				$return['Pagina'][1][ $item->itemId ] = get_single_item( $item->itemId );
 
 			}
 		}
@@ -66,7 +61,7 @@ function get_all_items() {
 		if ( $response->ack !== 'Failure' ) {
 
 			foreach ( $response->searchResult->item as $item ) {
-				$return['Pagina'][$pageNum][ $item->itemId ] = get_single_item($item->itemId);
+				$return['Pagina'][ $pageNum ][ $item->itemId ] = get_single_item( $item->itemId );
 			}
 		}
 	}

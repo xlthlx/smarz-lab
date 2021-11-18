@@ -1,8 +1,8 @@
 <?php
 
+use DTS\eBaySDK\Constants;
 use DTS\eBaySDK\Shopping\Services;
 use DTS\eBaySDK\Shopping\Types;
-use DTS\eBaySDK\Shopping\Enums;
 
 function get_single_item( $sku ) {
 
@@ -10,24 +10,20 @@ function get_single_item( $sku ) {
 	$return = [];
 
 	$service = new Services\ShoppingService( [
-		'authToken' => $config['production']['authToken'],
-		'credentials' => $config['production']['credentials']
+		'credentials' => $config['production']['credentials'],
+		'authToken'   => get_oauth(),
+		'globalId'    => Constants\GlobalIds::IT
 	] );
 	$request = new Types\GetSingleItemRequestType();
 
-	$request->ItemID = $sku;
+	$request->ItemID          = $sku;
 	$request->IncludeSelector = 'ItemSpecifics,Variations,Details';
 
 	$response = $service->getSingleItem( $request );
 
 	if ( isset( $response->Errors ) ) {
 		foreach ( $response->Errors as $error ) {
-			error_log(printf(
-				"%s: %s<br/>%s<br/><br/>",
-				$error->SeverityCode === Enums\SeverityCodeType::C_ERROR ? 'Error' : 'Warning',
-				$error->ShortMessage,
-				$error->LongMessage
-			));
+			$return['error'][ $error->ShortMessage ] = $error->LongMessage;
 		}
 	}
 
