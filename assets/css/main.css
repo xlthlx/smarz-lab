@@ -110,3 +110,7 @@ ul.shift li a:hover:after {
     display: block;
     border: 0 solid #505a5f;
 }
+
+.grecaptcha-badge {
+	display: none!important;
+}

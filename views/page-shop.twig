@@ -2,20 +2,20 @@
 
 {% block content %}
 
-    <article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
-        <section class="page-content">
+	<article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
+		<section class="page-content">
 
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="display-5 pb-3">{{ post.title }}</h2>
-                    <hr class="pt-0 mt-0 mb-4"/>
-                </div>
-                <div class="col-md-12">
-                    {{ post.content }}
-                </div>
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="display-5 pb-3">{{ post.title }}</h2>
+					<hr class="pt-0 mt-0 mb-4"/>
+				</div>
+				<div class="col-md-12">
+					{{ post.content }}
+				</div>
 
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-					{% if items.Pagina %}
+				{% if items.Pagina is defined %}
+					<div class="row row-cols-1 row-cols-md-3 g-4">
 						{% for item in items.Pagina %}
 							{% for card in item %}
 
@@ -36,12 +36,14 @@
 
 							{% endfor %}
 						{% endfor %}
-					{% endif %}
-                </div>
+					</div>
+				{% else %}
 
-            </div>
+				{% endif %}
 
-        </section>
-    </article>
+			</div>
+
+		</section>
+	</article>
 
 {% endblock %}

@@ -17,6 +17,8 @@ require_once __DIR__ . '/vendor.phar';
 $timber              = new Timber\Timber();
 $timber::$dirname    = array( 'views' );
 $timber::$autoescape = false;
+$timber::$cache      = false;
+
 /**
  * Subclass of Timber\Site to init the theme.
  */
@@ -97,7 +99,7 @@ class bootSite extends Timber\Site {
 	public function enqueue_scripts() {
 		// Styles.
 		wp_enqueue_style( 'boot-main', get_template_directory_uri() . '/assets/vendor/twbs/bootstrap/dist/css/bootstrap.css', [], filemtime( get_template_directory() . '/assets/vendor/twbs/bootstrap/dist/css/bootstrap.css' ) );
-		wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/assets/css/main.css', [], filemtime( get_template_directory() . '/assets/css/main.css' ) );
+		wp_enqueue_style( 'main', get_template_directory_uri() . '/assets/css/main.css', [], filemtime( get_template_directory() . '/assets/css/main.css' ) );
 
 		// Scripts.
 		wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/assets/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js', [ 'jquery' ], filemtime( get_template_directory() . '/assets/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js' ), true );
