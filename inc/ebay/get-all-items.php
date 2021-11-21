@@ -10,7 +10,6 @@ function get_all_items() {
 
 	$service = new Services\FindingService( [
 		'credentials' => $config['production']['credentials'],
-		'authToken'   => get_oauth(),
 		'globalId'    => Constants\GlobalIds::IT
 	] );
 
@@ -20,8 +19,7 @@ function get_all_items() {
 		'value' => [ 'a.pigeons' ]
 	] );
 
-	$request->sortOrder  = 'CurrentPriceHighest';
-	$request->categoryId = [ '58058' ];
+	$request->sortOrder = 'CurrentPriceHighest';
 
 	$request->paginationInput                 = new Types\PaginationInput();
 	$request->paginationInput->entriesPerPage = 9;
@@ -45,7 +43,29 @@ function get_all_items() {
 		if ( $total !== 0 ) {
 			foreach ( $response->searchResult->item as $item ) {
 
-				$return['Pagina'][1][ $item->itemId ] = get_single_item( $item->itemId );
+				$object['Titolo'] = $item->title;
+
+				if ( isset( $item->sellingStatus->currentPrice ) ) {
+					$object['Prezzo'] = '&euro; ' . $item->sellingStatus->currentPrice->value;
+				}
+
+				if ( isset( $item->galleryPlusPictureURL ) ) {
+					$object['Immagine'] = $item->galleryPlusPictureURL[0];
+				}
+
+				if ( isset( $item->viewItemURL ) ) {
+					$object['Link'] = $item->viewItemURL;
+				}
+
+				if ( isset( $item->condition ) ) {
+					$object['Stato'] = $item->condition->conditionDisplayName;
+				}
+
+				if ( isset( $item->location ) ) {
+					$object['Luogo'] = $item->location;
+				}
+
+				$return['Pagina'][1][ $item->itemId ] = $object;
 
 			}
 		}
@@ -61,7 +81,30 @@ function get_all_items() {
 		if ( $response->ack !== 'Failure' ) {
 
 			foreach ( $response->searchResult->item as $item ) {
-				$return['Pagina'][ $pageNum ][ $item->itemId ] = get_single_item( $item->itemId );
+
+				$object['Titolo'] = $item->title;
+
+				if ( isset( $item->sellingStatus->currentPrice ) ) {
+					$object['Prezzo'] = '&euro; ' . $item->sellingStatus->currentPrice->value;
+				}
+
+				if ( isset( $item->galleryPlusPictureURL ) ) {
+					$object['Immagine'] = $item->galleryPlusPictureURL[0];
+				}
+
+				if ( isset( $item->viewItemURL ) ) {
+					$object['Link'] = $item->viewItemURL;
+				}
+
+				if ( isset( $item->condition ) ) {
+					$object['Stato'] = $item->condition->conditionDisplayName;
+				}
+
+				if ( isset( $item->location ) ) {
+					$object['Luogo'] = $item->location;
+				}
+
+				$return['Pagina'][ $pageNum ][ $item->itemId ] = $object;
 			}
 		}
 	}
