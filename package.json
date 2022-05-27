@@ -9,10 +9,10 @@
   "author": "xlthlx",
   "devDependencies": {
     "autoprefixer": "^9.4.8",
-    "grunt": "^1.0.3",
-    "grunt-contrib-cssmin": "^3.0.0",
+    "grunt": "^1.5.3",
+    "grunt-contrib-cssmin": "^4.0.0",
     "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-watch": "^1.1.0",
+    "grunt-contrib-watch": "latest",
     "grunt-postcss": "^0.9.0",
     "pixrem": "^5.0.0",
     "postcss-flexibility": "^2.0.0"
