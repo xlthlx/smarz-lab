@@ -11,10 +11,11 @@
     }
   ],
   "require": {
-    "timber/timber": "1.*",
-    "johnbillion/extended-cpts": "^4.5",
-    "cmb2/cmb2": "^2.9",
-    "composer/installers": "^1.11",
+    "timber/timber": "^1.19.1",
+    "johnbillion/extended-cpts": "^5.0.2",
+    "hellonico/timber-dump-extension": "^1.0",
+    "cmb2/cmb2": "^v2.10.1",
+    "composer/installers": "^2.1.1",
     "benmorel/ebay-sdk-php": "^19.0"
   },
   "extra": {
@@ -29,5 +30,10 @@
   },
   "scripts": {
     "post-update-cmd": "vendor/bin/phar-install"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
   }
 }
