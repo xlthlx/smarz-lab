@@ -109,14 +109,14 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 			'name'          => '<span itemprop="name">%1$s</span>',
 			'position'      => '<meta itemprop="position" content="%1$s">',
 			'text'          => array(
-				'home'     => __( 'Home' ),
+				'home'     => 'Home',
 				'category' => '%s',
-				'search'   => __( 'Risultati della ricerca per: %s' ),
-				'tag'      => __( 'Tag: %s' ),
-				'author'   => __( 'Autore: %s' ),
-				'404'      => __( 'Errore 404' ),
-				'page'     => __( 'Pagina %s' ),
-				'cpage'    => __( 'Pagina %s' )
+				'search'   => 'Risultati della ricerca per: %s',
+				'tag'      => 'Tag: %s',
+				'author'   => 'Autore: %s',
+				'404'      => 'Errore 404',
+				'page'     => 'Pagina %s',
+				'cpage'    => 'Pagina %s'
 			)
 		);
 
@@ -124,7 +124,6 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 		$home_url  = home_url( '/' );
 		$parent_id = $post->post_parent ?? 0;
 		$title     = get_the_title();
-
 
 		$home_link = smarz_get_link( $args, $home_url, $args['text']['home'], 1 );
 
