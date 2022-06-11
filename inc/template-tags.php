@@ -127,7 +127,7 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 
 		$home_link = smarz_get_link( $args, $home_url, $args['text']['home'], 1 );
 
-		if ( ! is_home() && ! is_front_page() ) {
+		if ( ! is_front_page() ) {
 
 			$position = 0;
 			echo '<ol class="breadcrumb" id="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">';
@@ -256,7 +256,6 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 				echo $args['before_active'] . sprintf( $args['active'], get_permalink(), $title ) . sprintf( $args['position'], $position );
 
 			} elseif ( ! $parent_id && is_page() ) {
-
 				$position ++;
 				echo $args['before_active'] . sprintf( $args['active'], get_permalink(), $title ) . sprintf( $args['position'], $position );
 
@@ -270,6 +269,10 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 
 				$position ++;
 				echo $args['before_active'] . sprintf( $args['active'], get_permalink(), $title ) . sprintf( $args['position'], $position );
+
+			} elseif ( is_home() ) {
+				$position ++;
+				echo $args['before_active'] . sprintf( $args['active'], get_permalink(get_queried_object_id()), get_the_title(get_queried_object_id()) ) . sprintf( $args['position'], $position );
 
 			} else if ( is_tag() ) {
 				if ( get_query_var( 'paged' ) ) {
