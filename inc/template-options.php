@@ -14,7 +14,7 @@ function smarz_cache_options_page_message_callback( $cmb, $args ) {
 			$args['message'] = 'Tutti i prodotti aggiornati.';
 		}
 
-		if ( $args['is_updated'] == '' ) {
+		if ( $args['is_updated'] === '' ) {
 			$args['message'] = 'Nessun prodotto aggiornato.';
 		}
 
@@ -51,7 +51,7 @@ add_action( 'cmb2_admin_init', 'smarz_register_theme_options' );
 
 function updated_option_smarz_cache( $option, $old_value, $value ) {
 
-	if ( ( $option == 'smarz_theme_options' ) && isset($value['smarz_cache'][0]) && ($value['smarz_cache'][0]==='yes' ) ) {
+	if ( ( $option === 'smarz_theme_options' ) && isset($value['smarz_cache'][0]) && ($value['smarz_cache'][0]==='yes' ) ) {
 
 		update_option( 'smarz_theme_options', $old_value );
 
