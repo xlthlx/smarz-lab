@@ -56,7 +56,7 @@ function updated_option_smarz_cache( $option, $old_value, $value ) {
 		update_option( 'smarz_theme_options', $old_value );
 
 		delete_transient( 'ebay_items' );
-		set_transient( 'ebay_items', get_all_items(), 12 * HOUR_IN_SECONDS );
+		set_transient( 'ebay_items', getAllItems(), 12 * HOUR_IN_SECONDS );
 	}
 
 }

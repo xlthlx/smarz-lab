@@ -4,7 +4,10 @@ use DTS\eBaySDK\Constants;
 use DTS\eBaySDK\Finding\Services;
 use DTS\eBaySDK\Finding\Types;
 
-function get_all_items() {
+/**
+ * @return array
+ */
+function getAllItems(): array {
 	global $config;
 	$return = [];
 
@@ -33,8 +36,7 @@ function get_all_items() {
 		}
 	}
 
-
-	if ( $response->ack !== 'Failure' ) {
+	if ( $response->ack != 'Failure' ) {
 
 		$total            = $response->paginationOutput->totalEntries;
 		$return['Totale'] = $total;
@@ -43,34 +45,12 @@ function get_all_items() {
 		if ( $total !== 0 ) {
 			foreach ( $response->searchResult->item as $item ) {
 
-				$object['Titolo'] = $item->title;
-
-				if ( isset( $item->sellingStatus->currentPrice ) ) {
-					$object['Prezzo'] = '&euro; ' . $item->sellingStatus->currentPrice->value;
-				}
-
-				if ( isset( $item->galleryPlusPictureURL ) ) {
-					$object['Immagine'] = $item->galleryPlusPictureURL[0];
-				}
-
-				if ( isset( $item->viewItemURL ) ) {
-					$object['Link'] = $item->viewItemURL;
-				}
-
-				if ( isset( $item->condition ) ) {
-					$object['Stato'] = $item->condition->conditionDisplayName;
-				}
-
-				if ( isset( $item->location ) ) {
-					$object['Luogo'] = $item->location;
-				}
-
+				$object                               = getItem( $item );
 				$return['Pagina'][1][ $item->itemId ] = $object;
 
 			}
 		}
 	}
-
 
 	$limit = $response->paginationOutput->totalPages;
 	for ( $pageNum = 2; $pageNum <= $limit; $pageNum ++ ) {
@@ -78,36 +58,51 @@ function get_all_items() {
 
 		$response = $service->findItemsAdvanced( $request );
 
-		if ( $response->ack !== 'Failure' ) {
+		if ( $response->ack != 'Failure' ) {
 
 			foreach ( $response->searchResult->item as $item ) {
 
-				$object['Titolo'] = $item->title;
-
-				if ( isset( $item->sellingStatus->currentPrice ) ) {
-					$object['Prezzo'] = '&euro; ' . $item->sellingStatus->currentPrice->value;
-				}
-
-				if ( isset( $item->galleryPlusPictureURL ) ) {
-					$object['Immagine'] = $item->galleryPlusPictureURL[0];
-				}
-
-				if ( isset( $item->viewItemURL ) ) {
-					$object['Link'] = $item->viewItemURL;
-				}
-
-				if ( isset( $item->condition ) ) {
-					$object['Stato'] = $item->condition->conditionDisplayName;
-				}
-
-				if ( isset( $item->location ) ) {
-					$object['Luogo'] = $item->location;
-				}
-
+				$object = getItem( $item );
 				$return['Pagina'][ $pageNum ][ $item->itemId ] = $object;
 			}
 		}
 	}
 
 	return $return;
+}
+
+/**
+ * Get single item.
+ *
+ * @param Types\SearchItem $item
+ *
+ * @return array
+ */
+function getItem( Types\SearchItem $item ): array {
+
+	$object['Titolo'] = $item->title;
+
+	if ( isset( $item->sellingStatus->currentPrice ) ) {
+		$object['Prezzo'] = '&euro; ' . $item->sellingStatus->currentPrice->value;
+	}
+
+	if ( isset( $item->galleryURL ) ) {
+		$object['Immagine'] = str_replace( 's-l140','s-l500',$item->galleryURL );
+	}
+
+	if ( isset( $item->viewItemURL ) ) {
+		$object['Link'] = $item->viewItemURL;
+	}
+
+	if ( isset( $item->condition ) ) {
+		$object['Stato'] = $item->condition->conditionDisplayName;
+	}
+
+	if ( isset( $item->location ) ) {
+		$object['Luogo'] = $item->location;
+	}
+
+	$object['Debug'] = '<pre>' . print_r( $item,true ) . '</pre><br/><br/>';
+
+	return $object;
 }

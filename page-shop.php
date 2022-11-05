@@ -12,7 +12,7 @@ $timber_post     = new Timber\Post();
 $context['post'] = $timber_post;
 
 if ( false === ( $ebay_items = get_transient( 'ebay_items' ) ) ) {
-	$ebay_items = get_all_items();
+	$ebay_items = getAllItems();
 	set_transient( 'ebay_items', $ebay_items, 12 * HOUR_IN_SECONDS );
 }
 $context['items'] = $ebay_items;
