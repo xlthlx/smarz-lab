@@ -6,54 +6,7 @@
  * @subpackage  Smarz Lab
  */
 
-if ( ! function_exists( 'str_contains' ) ) {
-	/**
-	 * @param $haystack
-	 * @param $needle
-	 *
-	 * @return bool
-	 */
-	function str_contains( $haystack, $needle ) {
-		return '' === $needle || false !== strpos( $haystack, $needle );
-	}
-}
-
-if ( ! function_exists( 'str_starts_with' ) ) {
-	/**
-	 * @param $haystack
-	 * @param $needle
-	 * @param bool $case
-	 *
-	 * @return bool
-	 */
-	function str_starts_with( $haystack, $needle, $case = true ) {
-		if ( $case ) {
-			return strpos( $haystack, $needle ) === 0;
-		}
-
-		return stripos( $haystack, $needle, 0 ) === 0;
-	}
-}
-
-if ( ! function_exists( 'str_ends_with' ) ) {
-	/**
-	 * @param $haystack
-	 * @param $needle
-	 * @param bool $case
-	 *
-	 * @return bool
-	 */
-	function str_ends_with( $haystack, $needle, $case = true ) {
-		$expectedPosition = strlen( $haystack ) - strlen( $needle );
-		if ( $case ) {
-			return strrpos( $haystack, $needle ) === $expectedPosition;
-		}
-
-		return strripos( $haystack, $needle, 0 ) === $expectedPosition;
-	}
-}
-
-if ( ! function_exists( 'smarz_get_link' ) ) {
+if ( ! function_exists( 'sl_get_link' ) ) {
 	/**
 	 * Set up the single link.
 	 *
@@ -64,7 +17,7 @@ if ( ! function_exists( 'smarz_get_link' ) ) {
 	 *
 	 * @return string
 	 */
-	function smarz_get_link( $args, $link, $name, $position ) {
+	function sl_get_link( $args, $link, $name, $position ) {
 		$return = $args['before'];
 		$return .= sprintf(
 			$args['link'],
@@ -78,28 +31,11 @@ if ( ! function_exists( 'smarz_get_link' ) ) {
 	}
 }
 
-/**
- * WP Bootstrap Breadcrumbs
- * @package WP-Bootstrap-Breadcrumbs
- *
- * Description: A custom WordPress nav walker class to implement the Bootstrap 4 breadcrumbs style in a custom theme using the WordPress.
- * Author: Dimox - @Dimox, Alexsander Vyshnyvetskyy - @alex-wdmg
- * Version: 1.1.0
- * Author URI: https://github.com/Dimox
- * Author URI: https://github.com/alex-wdmg
- * GitHub Gist URI: https://gist.github.com/alex-wdmg/21e150e00f327215ee3ad5d0ca669b17
- * License: MIT
- */
-
-/**
- * Modified to be compatible with Bootstrap 5.
- */
-
-if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
+if ( ! function_exists( 'sl_breadcrumbs' ) ) {
 	/**
 	 * Breadcrumbs
 	 */
-	function smarz_breadcrumbs() {
+	function sl_breadcrumbs() {
 
 		$args = array(
 			'before'        => '<li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">',
@@ -125,7 +61,7 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 		$parent_id = $post->post_parent ?? 0;
 		$title     = get_the_title();
 
-		$home_link = smarz_get_link( $args, $home_url, $args['text']['home'], 1 );
+		$home_link = sl_get_link( $args, $home_url, $args['text']['home'], 1 );
 
 		if ( ! is_front_page() ) {
 
@@ -139,11 +75,11 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 				$parents = get_ancestors( get_query_var( 'cat' ), 'category' );
 				foreach ( array_reverse( $parents ) as $cat ) {
 					$position ++;
-					echo smarz_get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
+					echo sl_get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
 				}
 				if ( get_query_var( 'paged' ) ) {
 					$position ++;
-					echo smarz_get_link( $args, get_category_link( get_query_var( 'cat' ) ), get_cat_name( get_query_var( 'cat' ) ), $position );
+					echo sl_get_link( $args, get_category_link( get_query_var( 'cat' ) ), get_cat_name( get_query_var( 'cat' ) ), $position );
 					echo $args['before'] . sprintf( $args['text']['page'], get_query_var( 'paged' ) );
 
 				} else {
@@ -154,7 +90,7 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 				if ( get_query_var( 'paged' ) ) {
 
 					$position ++;
-					echo smarz_get_link( $args, $home_url . '?s=' . get_search_query(), sprintf( $args['text']['search'], get_search_query() ), $position );
+					echo sl_get_link( $args, $home_url . '?s=' . get_search_query(), sprintf( $args['text']['search'], get_search_query() ), $position );
 					echo $args['before'] . sprintf( $args['text']['page'], get_query_var( 'paged' ) );
 
 				} else {
@@ -173,7 +109,7 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 			} elseif ( is_month() ) {
 
 				$position ++;
-				echo smarz_get_link( $args, get_year_link( get_the_time( 'Y' ) ), get_the_time( 'Y' ), $position );
+				echo sl_get_link( $args, get_year_link( get_the_time( 'Y' ) ), get_the_time( 'Y' ), $position );
 
 				$position ++;
 				echo $args['before_active'] . sprintf( $args['active'], get_permalink(), get_the_time( 'F' ) ) . sprintf( $args['position'], $position );
@@ -181,10 +117,10 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 			} elseif ( is_day() ) {
 
 				$position ++;
-				echo smarz_get_link( $args, get_year_link( get_the_time( 'Y' ) ), get_the_time( 'Y' ), $position );
+				echo sl_get_link( $args, get_year_link( get_the_time( 'Y' ) ), get_the_time( 'Y' ), $position );
 
 				$position ++;
-				echo smarz_get_link( $args, get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ), get_the_time( 'F' ), $position );
+				echo sl_get_link( $args, get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ), get_the_time( 'F' ), $position );
 
 
 				$position ++;
@@ -194,7 +130,7 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 				$post_type = get_post_type_object( get_post_type() );
 				if ( $post_type && get_post_type() !== 'post' ) {
 					$position ++;
-					echo smarz_get_link( $args, get_post_type_archive_link( $post_type->name ), $post_type->labels->name, $position );
+					echo sl_get_link( $args, get_post_type_archive_link( $post_type->name ), $post_type->labels->name, $position );
 					$position ++;
 					$args['before_active'] . sprintf( $args['active'], get_permalink(), $title ) . sprintf( $args['position'], $position );
 
@@ -206,12 +142,12 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 
 					foreach ( $parents as $cat ) {
 						$position ++;
-						echo smarz_get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
+						echo sl_get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
 					}
 
 					if ( get_query_var( 'cpage' ) ) {
 						$position ++;
-						echo smarz_get_link( $args, get_permalink(), $title, $position );
+						echo sl_get_link( $args, get_permalink(), $title, $position );
 
 						$position ++;
 						echo $args['before_active'] . sprintf( $args['active'], get_permalink(), sprintf( $args['text']['cpage'], get_query_var( 'cpage' ) ) ) . sprintf( $args['position'], $position );
@@ -227,7 +163,7 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 				if ( $post_type && get_query_var( 'paged' ) ) {
 
 					$position ++;
-					echo smarz_get_link( $args, get_post_type_archive_link( $post_type->name ), $post_type->label, $position );
+					echo sl_get_link( $args, get_post_type_archive_link( $post_type->name ), $post_type->label, $position );
 
 					$position ++;
 					echo $args['before_active'] . sprintf( $args['active'], get_permalink(), sprintf( $args['text']['page'], get_query_var( 'paged' ) ) ) . sprintf( $args['position'], $position );
@@ -246,11 +182,11 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 				$parents[] = $catID;
 				foreach ( $parents as $cat ) {
 					$position ++;
-					echo smarz_get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
+					echo sl_get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
 				}
 
 				$position ++;
-				echo smarz_get_link( $args, get_permalink( $parent ), $parent->post_title, $position );
+				echo sl_get_link( $args, get_permalink( $parent ), $parent->post_title, $position );
 
 				$position ++;
 				echo $args['before_active'] . sprintf( $args['active'], get_permalink(), $title ) . sprintf( $args['position'], $position );
@@ -264,7 +200,7 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 				$parents = get_post_ancestors( get_the_ID() );
 				foreach ( array_reverse( $parents ) as $pageID ) {
 					$position ++;
-					echo smarz_get_link( $args, get_page_link( $pageID ), get_the_title( $pageID ), $position );
+					echo sl_get_link( $args, get_page_link( $pageID ), get_the_title( $pageID ), $position );
 				}
 
 				$position ++;
@@ -278,7 +214,7 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 				if ( get_query_var( 'paged' ) ) {
 					$position ++;
 					$tagID = get_query_var( 'tag_id' );
-					echo smarz_get_link( $args, get_tag_link( $tagID ), single_tag_title( '', false ), $position );
+					echo sl_get_link( $args, get_tag_link( $tagID ), single_tag_title( '', false ), $position );
 
 					$position ++;
 					echo $args['before_active'] . sprintf( $args['active'], get_permalink(), sprintf( $args['text']['page'], get_query_var( 'paged' ) ) ) . sprintf( $args['position'], $position );
@@ -293,7 +229,7 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 				if ( get_query_var( 'paged' ) ) {
 
 					$position ++;
-					echo smarz_get_link( $args, get_author_posts_url( $author->ID ), sprintf( $args['text']['author'], $author->display_name ), $position );
+					echo sl_get_link( $args, get_author_posts_url( $author->ID ), sprintf( $args['text']['author'], $author->display_name ), $position );
 
 					$position ++;
 					echo $args['before_active'] . sprintf( $args['active'], get_permalink(), sprintf( $args['text']['page'], get_query_var( 'paged' ) ) ) . sprintf( $args['position'], $position );
@@ -319,11 +255,11 @@ if ( ! function_exists( 'smarz_breadcrumbs' ) ) {
 	}
 }
 
-if ( ! function_exists( 'smarz_comment_form' ) ) {
+if ( ! function_exists( 'sl_comment_form' ) ) {
 	/**
 	 * Custom comments form.
 	 */
-	function smarz_comment_form( $post_id = false ) {
+	function sl_comment_form( $post_id = false ) {
 
 		$comments_args = array(
 			'format'               => 'xhtml',
@@ -354,5 +290,251 @@ if ( ! function_exists( 'smarz_comment_form' ) ) {
 		} else {
 			comment_form( $comments_args );
 		}
+	}
+}
+
+if ( ! function_exists( 'sl_get_menu_items' ) ) {
+	/**
+	 * Get a menu as array from location.
+	 *
+	 * @param $theme_location
+	 *
+	 * @return array
+	 */
+	function sl_get_menu_items( $theme_location ) {
+
+		$locations = get_nav_menu_locations();
+		if ( ( $locations ) && isset( $locations[ $theme_location ] ) ) {
+
+			$menu       = get_term( $locations[ $theme_location ], 'nav_menu' );
+			$menu_items = wp_get_nav_menu_items( $menu->term_id );
+			$menu_list  = array();
+			$bool       = false;
+
+			$i = 0;
+			foreach ( $menu_items as $menu_item ) {
+				if ( (int) $menu_item->menu_item_parent === 0 ) {
+
+					$parent     = $menu_item->ID;
+					$menu_array = array();
+					$y          = 0;
+
+					foreach ( $menu_items as $submenu ) {
+						if ( isset( $submenu ) && (int) $submenu->menu_item_parent === (int) $parent ) {
+							$bool       = true;
+							$menu_array = sl_get_arr( $submenu, $menu_array, $y );
+							$y ++;
+						}
+					}
+
+					$menu_list = sl_get_arr( $menu_item, $menu_list, $i );
+
+					if ( $bool === true && count( $menu_array ) > 0 ) {
+						$menu_list[ $i ]['submenu'] = $menu_array;
+					}
+					$i ++;
+				}
+			}
+		} else {
+			$menu_list[] = '';
+		}
+
+		return $menu_list;
+	}
+
+	/**
+	 * Set up the menu array.
+	 *
+	 * @param $menu
+	 * @param array $menu_array
+	 * @param int   $i
+	 *
+	 * @return array
+	 */
+	function sl_get_arr( $menu, array $menu_array, int $i ): array {
+
+		$menu_array[ $i ]['url']     = $menu->url;
+		$menu_array[ $i ]['title']   = $menu->title;
+		$menu_array[ $i ]['target']  = ! empty( $menu->target ) ? ' target="' . $menu->target . '"' : '';
+		$menu_array[ $i ]['classes'] = implode( ' ', $menu->classes );
+
+		return $menu_array;
+	}
+}
+
+if ( ! function_exists( 'sl_pagination' ) ) {
+	/**
+	 * Pagination.
+	 *
+	 * @param $wp_query
+	 * @param $paged
+	 *
+	 * @return void
+	 */
+	function sl_pagination( $wp_query, $paged ) {
+		global $lang;
+
+		$first    = 'Primo';
+		$last     = 'Ultimo';
+		$previous = 'Precedente';
+		$next     = 'Successivo';
+
+		if ( 'en' === $lang ) {
+			$first    = 'First';
+			$last     = 'Last';
+			$previous = 'Previous';
+			$next     = 'Next';
+		}
+
+		$return   = '';
+		$max_page = $wp_query->max_num_pages;
+
+		$pages_to_show         = 8;
+		$pages_to_show_minus_1 = $pages_to_show - 1;
+		$half_page_start       = floor( $pages_to_show_minus_1 / 2 );
+		$half_page_end         = ceil( $pages_to_show_minus_1 / 2 );
+		$start_page            = $paged - $half_page_start;
+
+		if ( $start_page <= 0 ) {
+			$start_page = 1;
+		}
+
+		$end_page = $paged + $half_page_end;
+		if ( ( $end_page - $start_page ) !== $pages_to_show_minus_1 ) {
+			$end_page = $start_page + $pages_to_show_minus_1;
+		}
+
+		if ( $end_page > $max_page ) {
+			$start_page = $max_page - $pages_to_show_minus_1;
+			$end_page   = $max_page;
+		}
+
+		if ( $start_page <= 0 ) {
+			$start_page = 1;
+		}
+
+		if ( $max_page > 1 ) {
+
+			$return  = '<nav class="mt-1 mb-5">' . "\n";
+			$return .= '<ul class="pagination flex-wrap">' . "\n";
+
+			if ( 1 < (int) $paged ) {
+				$return .= '<li class="page-item">' . "\n";
+				$return .= '<a href="' . esc_url( get_pagenum_link() ) . '" class="page-link btn-50" title="' . $first . '">&laquo;</a>' . "\n";
+				$return .= '</li>' . "\n";
+			}
+
+			$return .= '<li class="page-item">' . "\n";
+			$return .= str_replace( '<a href="', '<a class="page-link btn-50" title="' . $previous . '" href="', get_previous_posts_link( '&lsaquo;' ) );
+			$return .= '</li>' . "\n";
+
+			if ( (int) $start_page >= 2 && $pages_to_show < $max_page ) {
+				$return .= '<li class="page-item">' . "\n";
+				$return .= '<a href="' . esc_url( get_pagenum_link() ) . '" class="page-link btn-50" title="1">1</a>' . "\n";
+				$return .= '</li>' . "\n";
+				$return .= '<li class="page-item active" aria-current="page">
+					<span class="page-link dots">...<span class="visually-hidden">(current)</span></span>
+				  </li>';
+			}
+
+			for ( $i = $start_page; $i <= $end_page; $i ++ ) {
+				if ( (int) $i === (int) $paged ) {
+					$return .= '<li class="page-item active" aria-current="page">
+						<span class="page-link page-number page-numbers current btn-50">' . number_format_i18n( $i ) . ' <span class="visually-hidden">(current)</span></span>
+					</li>';
+				} else {
+					$return .= '<li class="page-item">' . "\n";
+					$return .= '<a href="' . esc_url( get_pagenum_link( $i ) ) . '" class="page-link btn-50" title="' . number_format_i18n( $i ) . '">' . number_format_i18n( $i ) . '</a>';
+					$return .= '</li>' . "\n";
+				}
+			}
+
+			if ( (int) $end_page < $max_page ) {
+				$return .= '<li class="page-item active" aria-current="page">
+							<span class="page-link dots">...<span class="visually-hidden">(current)</span></span>
+						  </li>';
+				$return .= '<li class="page-item">' . "\n";
+				$return .= '<a href="' . esc_url( get_pagenum_link( $max_page ) ) . '" class="page-link btn-50" title="' . $max_page . '">' . $max_page . '</a>';
+				$return .= '</li>' . "\n";
+			}
+
+			$return .= '<li class="page-item">' . "\n";
+			$return .= str_replace( '<a href="', '<a class="page-link btn-50" title="' . $next . '" href="', get_next_posts_link( '&rsaquo;', $max_page ) );
+			$return .= '</li>' . "\n";
+
+			if ( (int) $max_page > (int) $paged ) {
+				$return .= '<li class="page-item">' . "\n";
+				$return .= '<a href="' . esc_url( get_pagenum_link( $max_page ) ) . '" class="page-link btn-50" title="' . $last . '">&raquo;</a>';
+				$return .= '</li>' . "\n";
+			}
+			$return .= '</ul>' . "\n";
+			$return .= '</nav>' . "\n";
+		}
+
+		echo $return;
+	}
+}
+
+if ( ! function_exists( 'sl_get_the_terms' ) ) {
+
+	/**
+	 * Function to return list of the terms.
+	 *
+	 * @param string 'taxonomy'
+	 *
+	 * @return string Returns the list of elements.
+	 */
+
+	function sl_get_the_terms( $taxonomy, $cut = false ) {
+
+		$all_terms = '';
+		$terms     = get_the_terms( get_the_ID(), $taxonomy );
+
+		if ( $terms && ! is_wp_error( $terms ) ) {
+
+			$term_links = array();
+
+			foreach ( $terms as $term ) {
+				$term_links[] = '<li class="d-inline"><a href="' . esc_attr( get_term_link( $term->slug, $taxonomy ) ) . '">' . esc_html( $term->name ) . '</a></li>';
+			}
+
+			if ( $cut ) {
+				$term_links    = array();
+				$key           = count( $terms ) - 1;
+				$term_links[0] = '<li class="d-inline"><a href="' . esc_attr( get_term_link( $terms[ $key ]->slug, $taxonomy ) ) . '">' . esc_html( $terms[ $key ]->name ) . '</a></li>';
+			}
+
+			$all_terms = implode( '<span class="badge bg-white text-dark rounded-0 border-0 fw-bold">|</span> ', $term_links );
+		}
+
+		return $all_terms;
+
+	}
+}
+
+if ( ! function_exists( 'sl_get_excerpt' ) ) {
+	/**
+	 * Set up an excerpt from $content.
+	 *
+	 * @param int $length
+	 *
+	 * @return string
+	 * @throws Exception
+	 */
+	function sl_get_excerpt( int $length = 50 ) {
+
+		$content = get_the_content();
+
+		$content = strip_shortcodes( $content );
+		$content = excerpt_remove_blocks( $content );
+		$content = apply_filters( 'the_content',$content );
+		$content = str_replace( ']]>',']]&gt;',$content );
+		$content = wp_trim_words( $content,$length,'...' );
+
+		if ( '' === trim( $content ) ) {
+			$content = get_the_excerpt();
+		}
+
+		return $content;
 	}
 }

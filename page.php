@@ -5,10 +5,31 @@
  * @package  WordPress
  * @subpackage  Smarz Lab
  */
+get_header();
+?>
+<?php
+while ( have_posts() ) :
+the_post();
+?>
+<article class="post-type-<?php echo get_post_type(); ?>" id="post-<?php echo get_the_ID(); ?>">
+	<section class="page-content">
+		<h1 class="display-5 pb-3"><?php echo get_the_title(); ?></h1>
+		<hr class="pt-0 mt-0 mb-4"/>
 
-$context = Timber::context();
+		<div class="row">
+			<div class="col-md-8">
+				<?php echo get_the_content(); ?>
+			</div>
 
-$timber_post     = new Timber\Post();
-$context['post'] = $timber_post;
+			<div class="col-md-4">
+				<aside class="sidebar px-5">
+					<?php dynamic_sidebar( 'sidebar' ); ?>
+				</aside>
+			</div>
+		</div>
 
-Timber::render( array( 'page-' . $timber_post->post_name . '.twig', 'page.twig' ), $context );
+	</section>
+</article>
+<?php endwhile; ?>
+<?php
+get_footer();

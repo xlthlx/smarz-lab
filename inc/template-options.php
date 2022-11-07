@@ -6,7 +6,13 @@
  * @subpackage  Smarz Lab
  */
 
-function smarz_cache_options_page_message_callback( $cmb, $args ) {
+/**
+ * @param $cmb
+ * @param $args
+ *
+ * @return void
+ */
+function sl_cache_options_page_message_callback( $cmb, $args ) {
 
 	if ( ! empty( $args['should_notify'] ) ) {
 
@@ -22,7 +28,10 @@ function smarz_cache_options_page_message_callback( $cmb, $args ) {
 	}
 }
 
-function smarz_register_theme_options() {
+/**
+ * @return void
+ */
+function sl_register_theme_options() {
 	$cmb_options = new_cmb2_box( array(
 		'id'           => 'smarz_theme_options_page',
 		'title'        => 'Opzioni Tema',
@@ -30,7 +39,7 @@ function smarz_register_theme_options() {
 		'option_key'   => 'smarz_theme_options',
 		'icon_url'     => 'dashicons-hammer',
 		'menu_title'   => 'Opzioni',
-		'message_cb'   => 'smarz_cache_options_page_message_callback',
+		'message_cb'   => 'sl_cache_options_page_message_callback',
 		'save_button'  => 'Aggiorna',
 	) );
 
@@ -46,10 +55,10 @@ function smarz_register_theme_options() {
 
 }
 
-add_action( 'cmb2_admin_init', 'smarz_register_theme_options' );
+add_action( 'cmb2_admin_init', 'sl_register_theme_options' );
 
 
-function updated_option_smarz_cache( $option, $old_value, $value ) {
+function updated_option_sl_cache( $option, $old_value, $value ) {
 
 	if ( ( $option === 'smarz_theme_options' ) && isset($value['smarz_cache'][0]) && ($value['smarz_cache'][0]==='yes' ) ) {
 
@@ -61,4 +70,4 @@ function updated_option_smarz_cache( $option, $old_value, $value ) {
 
 }
 
-add_filter( 'updated_option', 'updated_option_smarz_cache', 10, 3 );
+add_filter( 'updated_option', 'updated_option_sl_cache', 10, 3 );

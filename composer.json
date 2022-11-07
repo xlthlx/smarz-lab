@@ -1,38 +1,53 @@
 {
-  "name": "xlthlx/boot",
-  "license": "MIT",
-  "description": "Starter Theme based on Timber and Bootstrap 5.",
-  "type":"wordpress-theme",
-  "minimum-stability" : "stable",
+  "name": "xlthlx/smarz-lab",
+  "type": "wordpress-theme",
+  "description": "",
+  "keywords": [
+	"WordPress",
+	"Themes"
+  ],
+  "homepage": "https://smarz-lab.com",
+  "license": "GPL-2.0-or-later",
   "authors": [
-    {
-      "email": "xlthlx@gmail.com",
-      "name": "xlthlx"
-    }
+	{
+	  "name": "xlthlx",
+	  "homepage": "https://xlthlx.com"
+	}
   ],
   "require": {
-    "timber/timber": "^1.19.1",
-    "johnbillion/extended-cpts": "^5.0.2",
-    "cmb2/cmb2": "^v2.10.1",
-    "composer/installers": "^2.1.1",
-    "benmorel/ebay-sdk-php": "^19.0"
-  },
-  "extra": {
-    "installer-paths": {
-      "inc/{$vendor}/{$name}/": [
-        "type:wordpress-plugin"
-      ]
-    }
+	"php": ">=7.4",
+	"rosell-dk/webp-convert": "^2.9",
+	"deeplcom/deepl-php": "^0.4.0",
+	"cmb2/cmb2": "^2.10",
+	"johnbillion/extended-cpts": "^5.0",
+	"composer/installers": "^2.1",
+	"benmorel/ebay-sdk-php": "^19.0"
   },
   "require-dev": {
-    "dxw/phar-install": "^1.1"
+	"dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+	"wptrt/wpthemereview": "^0.2.1",
+	"php-parallel-lint/php-parallel-lint": "^1.2.0",
+	"wp-cli/i18n-command": "^2.2.5",
+	"dxw/phar-install": "^1.1.2"
   },
   "scripts": {
-    "post-update-cmd": "vendor/bin/phar-install"
+	"lint:wpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs --ignore=vendor/*,git/*,cmb2/* -n --report-file=report.txt",
+	"lint:wpcs:fix": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf --ignore=vendor/*,git/*,cmb2/*",
+	"lint:php": "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor .",
+	"make-pot": "wp i18n make-pot . languages/smarz-lab.pot",
+	"post-update-cmd": "vendor/bin/phar-install"
   },
   "config": {
-    "allow-plugins": {
-      "composer/installers": true
-    }
+	"allow-plugins": {
+	  "dealerdirect/phpcodesniffer-composer-installer": true,
+	  "composer/installers": true
+	}
+  },
+  "extra": {
+	"installer-paths": {
+	  "inc/{$vendor}/{$name}/": [
+		"type:wordpress-plugin"
+	  ]
+	}
   }
 }

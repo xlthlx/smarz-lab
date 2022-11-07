@@ -1,20 +1,26 @@
 {
-  "name": "boot",
-  "version": "1.0.0",
-  "description": "Boot Starter Theme",
-  "main": "Gruntfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "name": "smarz-lab",
+  "version": "2.0.0",
+  "description": "smarz-lab.com theme",
   "author": "xlthlx",
+  "keywords": [
+	"WordPress",
+	"Theme"
+  ],
+  "homepage": "https://smarz-lab.com/",
+  "repository": {
+	"type": "git",
+	"url": "git+https://github.com/xlthlx/smarz-lab"
+  },
+  "scripts": {
+	"minify:css": "cleancss -o assets/css/main.min.css assets/css/main.css",
+	"watch:css": "onchange 'src/css/*.css' -- npm run minify:css",
+	"watch": "run-p watch:*",
+	"build": "npm run minify:css"
+  },
   "devDependencies": {
-    "autoprefixer": "^9.4.8",
-    "grunt": "^1.5.3",
-    "grunt-contrib-cssmin": "^3.0.0",
-    "grunt-contrib-sass": "^2.0.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-postcss": "^0.9.0",
-    "pixrem": "^5.0.0",
-    "postcss-flexibility": "^3.0.0"
+	"clean-css-cli": "^5.6.1",
+	"npm-run-all": "^4.1.5",
+	"onchange": "^7.1.0"
   }
 }
