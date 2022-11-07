@@ -40,7 +40,7 @@ while ( have_posts() ) :
 
 
 					<div class="article-body pr-4">
-						<?php echo get_the_content(); ?>
+						<?php the_content(); ?>
 					</div>
 
 					<?php $cats = sl_get_the_terms( 'category' );

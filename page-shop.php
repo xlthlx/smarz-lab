@@ -24,7 +24,7 @@ while ( have_posts() ) :
 
 			<div class="row">
 				<div class="col-md-12">
-					<?php echo get_the_content(); ?>
+					<?php the_content(); ?>
 				</div>
 
 				<div class="row row-cols-1 row-cols-md-3 g-4">
