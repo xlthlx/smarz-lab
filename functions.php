@@ -12,6 +12,7 @@
 require_once __DIR__ . '/vendor.phar';
 
 add_filter( 'login_display_language_dropdown','__return_false' );
+add_filter( 'wpcf7_load_js', '__return_false' );
 
 /*
  * Set theme supports and image sizes.
