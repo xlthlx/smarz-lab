@@ -33,14 +33,14 @@ while ( have_posts() ) :
                             <?php if (isset($card['Titolo']) ) { ?>
                                 <div class="col">
                                     <div class="card h-100">
-                                        <a title="Guarda <?php echo $card['Titolo']; ?> su eBay" href="<?php echo $card['Link']; ?>" target="_blank">
-                                            <img alt="<?php echo $card['Titolo']; ?>" src="<?php echo $card['Immagine']; ?>"/>
+                                        <a title="Guarda i dettagli su eBay" href="<?php echo $card['Link']; ?>" target="_blank">
+                                            <img width="400" alt="<?php echo $card['Titolo']; ?>" src="<?php echo $card['Immagine']; ?>"/>
                                         </a>
                                         <div class="card-body">
                                             <h5 class="card-title"><?php echo $card['Titolo']; ?></h5>
                                         </div>
                                         <div class="card-footer">
-                                            <a title="Guarda <?php echo $card['Titolo']; ?> su eBay" href="<?php echo $card['Link']; ?>" target="_blank">Guarda i dettagli su eBay</a>
+                                            <a title="Guarda i dettagli su eBay" href="<?php echo $card['Link']; ?>" target="_blank">Guarda i dettagli su eBay</a>
                                         </div>
                                     </div>
                                 </div>
