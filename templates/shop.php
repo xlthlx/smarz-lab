@@ -34,7 +34,7 @@ while ( have_posts() ) :
                                 <div class="col">
                                     <div class="card h-100">
                                         <a title="Guarda i dettagli su eBay" href="<?php echo $card['Link']; ?>" target="_blank">
-                                            <img width="400" alt="<?php echo $card['Titolo']; ?>" src="<?php echo $card['Immagine']; ?>"/>
+                                            <img alt="<?php echo $card['Titolo']; ?>" src="<?php echo $card['Immagine']; ?>"/>
                                         </a>
                                         <div class="card-body">
                                             <h5 class="card-title"><?php echo $card['Titolo']; ?></h5>
