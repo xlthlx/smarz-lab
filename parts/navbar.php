@@ -1,4 +1,15 @@
-<?php global $site_url,$site_name,$site_desc; ?>
+<?php
+/**
+ * Navbar.
+ *
+ * @category Theme
+ * @package  Smarz_Lab
+ * @author   Serena Piccioni <serena@piccioni.london>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://smarz-lab.com/
+ */
+
+global $site_url,$site_name,$site_desc; ?>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 

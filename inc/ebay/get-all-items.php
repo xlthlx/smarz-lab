@@ -1,10 +1,21 @@
 <?php
+/**
+ * Ebay functions.
+ *
+ * @category Theme
+ * @package  Smarz_Lab
+ * @author   Serena Piccioni <serena@piccioni.london>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://smarz-lab.com/
+ */
 
 use DTS\eBaySDK\Constants;
 use DTS\eBaySDK\Finding\Services;
 use DTS\eBaySDK\Finding\Types;
 
 /**
+ * Get all itemas.
+ *
  * @return array
  */
 function getAllItems(): array
@@ -16,7 +27,7 @@ function getAllItems(): array
         [
         'credentials' => $config['production']['credentials'],
         'globalId'    => Constants\GlobalIds::IT
-        ] 
+        ]
     );
 
     $request               = new Types\FindItemsAdvancedRequest();
@@ -24,7 +35,7 @@ function getAllItems(): array
         [
         'name'  => 'Seller',
         'value' => [ 'a.pigeons' ]
-        ] 
+        ]
     );
 
     $request->sortOrder = 'CurrentPriceHighest';
@@ -79,7 +90,7 @@ function getAllItems(): array
 /**
  * Get single item.
  *
- * @param Types\SearchItem $item
+ * @param Types\SearchItem $item Single item.
  *
  * @return array
  */

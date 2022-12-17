@@ -2,9 +2,13 @@
 /**
  * The Template for the sidebar containing the main widget area.
  *
- * @package    WordPress
- * @subpackage Smarz Lab
+ * @category Theme
+ * @package  Smarz_Lab
+ * @author   Serena Piccioni <serena@piccioni.london>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://smarz-lab.com/
  */
+
 ?>
 
 <div class="col-md-4">

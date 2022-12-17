@@ -2,8 +2,11 @@
 /**
  * Header.
  *
- * @package    WordPress
- * @subpackage Smarz Lab
+ * @category Theme
+ * @package  Smarz_Lab
+ * @author   Serena Piccioni <serena@piccioni.london>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://smarz-lab.com/
  */
 
 global $charset;
@@ -14,7 +17,6 @@ global $charset;
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset; ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <?php wp_head(); ?>
 </head>
 

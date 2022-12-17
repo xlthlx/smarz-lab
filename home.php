@@ -2,9 +2,13 @@
 /**
  * Homepage template.
  *
- * @package    WordPress
- * @subpackage Smarz Lab
+ * @category Theme
+ * @package  Smarz_Lab
+ * @author   Serena Piccioni <serena@piccioni.london>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://smarz-lab.com/
  */
+
 global $wp_query;
 get_header();
 $paged = ( get_query_var('paged') ) ?: 1;
