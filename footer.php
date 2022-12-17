@@ -14,7 +14,7 @@
 </main>
 
 <footer class="border-top bg-dark pt-5 mt-5 pb-5 text-white">
-    <?php get_template_part('parts/footer'); ?>
+	<?php get_template_part( 'parts/footer' ); ?>
 </footer>
 <?php wp_footer(); ?>
 

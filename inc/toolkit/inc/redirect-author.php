@@ -14,13 +14,12 @@
  *
  * @return void
  */
-function Sl_Redirect_Archives_author()
-{
-    if (is_author() ) {
-        wp_redirect(home_url(), 301);
+function Sl_Redirect_Archives_author() {
+	if ( is_author() ) {
+		wp_redirect( home_url(), 301 );
 
-        die();
-    }
+		die();
+	}
 }
 
-add_action('template_redirect', 'Sl_Redirect_Archives_author');
+add_action( 'template_redirect', 'Sl_Redirect_Archives_author' );

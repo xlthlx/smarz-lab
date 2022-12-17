@@ -9,5 +9,5 @@
  * @link     https://smarz-lab.com/
  */
 
-$config  = include __DIR__ . '/conf.php';
+$config = include 'conf.php';
 require_once 'get-all-items.php';

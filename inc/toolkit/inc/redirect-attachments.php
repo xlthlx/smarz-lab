@@ -14,18 +14,17 @@
  *
  * @return void
  */
-function Sl_Attachment_Pages_redirect()
-{
-    global $post;
+function Sl_Attachment_Pages_redirect() {
+	global $post;
 
-    if (is_attachment() ) {
-        if (isset($post->post_parent) && ( 0 !== $post->post_parent ) ) {
-            wp_redirect(get_permalink($post->post_parent), 301);
-        } else {
-            wp_redirect(home_url(), 301);
-        }
-        exit;
-    }
+	if ( is_attachment() ) {
+		if ( isset( $post->post_parent ) && ( 0 !== $post->post_parent ) ) {
+			wp_redirect( get_permalink( $post->post_parent ), 301 );
+		} else {
+			wp_redirect( home_url(), 301 );
+		}
+		exit;
+	}
 }
 
-add_action('template_redirect', 'Sl_Attachment_Pages_redirect');
+add_action( 'template_redirect', 'Sl_Attachment_Pages_redirect' );

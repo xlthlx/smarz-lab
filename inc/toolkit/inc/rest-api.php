@@ -14,25 +14,23 @@
  *
  * @param string $access No idea.
  *
- * @return WP_Error
+ * @return WP_Error|string
  */
-function Sl_Disable_Wp_Rest_api( $access )
-{
+function sl_disable_wp_rest_api( $access ) {
+	if ( ! is_user_logged_in() ) {
+		$message = apply_filters(
+			'disable_wp_rest_api_error',
+			__( 'REST API restricted to authenticated users.', 'xlthlx' )
+		);
 
-    if (! is_user_logged_in() ) {
-        $message = apply_filters(
-            'disable_wp_rest_api_error',
-            __('REST API restricted to authenticated users.', 'xlthlx')
-        );
+		return new WP_Error(
+			'rest_login_required',
+			$message,
+			array( 'status' => rest_authorization_required_code() )
+		);
+	}
 
-        return new WP_Error(
-            'rest_login_required',
-            $message,
-            array( 'status' => rest_authorization_required_code() )
-        );
-    }
-
-    return $access;
+	return $access;
 }
 
 /**
@@ -40,16 +38,14 @@ function Sl_Disable_Wp_Rest_api( $access )
  *
  * @return void
  */
-function Sl_Disable_Rest_api()
-{
+function sl_disable_rest_api() {
+	remove_action( 'template_redirect', 'rest_output_link_header', 11 );
+	remove_action( 'wp_head', 'rest_output_link_wp_head' );
+	remove_action( 'xmlrpc_rsd_apis', 'rest_output_rsd' );
 
-    remove_action('template_redirect', 'rest_output_link_header', 11);
-    remove_action('wp_head', 'rest_output_link_wp_head');
-    remove_action('xmlrpc_rsd_apis', 'rest_output_rsd');
-
-    add_filter('rest_authentication_errors', 'Sl_Disable_Wp_Rest_api');
+	add_filter( 'rest_authentication_errors', 'sl_disable_wp_rest_api' );
 }
 
-if (! is_admin() ) {
-    add_action('init', 'Sl_Disable_Rest_api');
+if ( ! is_admin() ) {
+	add_action( 'init', 'sl_disable_rest_api' );
 }

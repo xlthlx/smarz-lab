@@ -16,23 +16,22 @@
  *
  * @return array
  */
-function Sl_Posts_columns( $columns )
-{
-    $post_type = get_post_type();
-    if ('post' === $post_type ) {
-        unset($columns['date']);
+function Sl_Posts_columns( $columns ) {
+	 $post_type = get_post_type();
+	if ( 'post' === $post_type ) {
+		unset( $columns['date'] );
 
-        $columns = array_merge(
-            $columns,
-            array(
-            'thumbs'   => __('Thumbnail', 'xlthlx'),
-            'modified' => __('Data ultima modifica', 'xlthlx'),
-            'date'     => __('Date', 'xlthlx'),
-            )
-        );
-    }
+		$columns = array_merge(
+			$columns,
+			array(
+				'thumbs'   => __( 'Thumbnail', 'xlthlx' ),
+				'modified' => __( 'Data ultima modifica', 'xlthlx' ),
+				'date'     => __( 'Date', 'xlthlx' ),
+			)
+		);
+	}
 
-    return $columns;
+	return $columns;
 }
 
 /**
@@ -43,20 +42,19 @@ function Sl_Posts_columns( $columns )
  *
  * @return void
  */
-function Sl_Posts_Custom_columns( $column_name, $id )
-{
-    if ('thumbs' === $column_name ) {
-        echo get_the_post_thumbnail($id, 'thumbnail');
-    }
-    if ('modified' === $column_name ) {
-        echo ucfirst(get_the_modified_time('d/m/Y', $id)) . ' alle ' . get_the_modified_time('H:i', $id);
-    }
-    if ('date' === $column_name ) {
-        echo get_the_date($id);
-    }
+function Sl_Posts_Custom_columns( $column_name, $id ) {
+	if ( 'thumbs' === $column_name ) {
+		echo get_the_post_thumbnail( $id, 'thumbnail' );
+	}
+	if ( 'modified' === $column_name ) {
+		echo ucfirst( get_the_modified_time( 'd/m/Y', $id ) ) . ' alle ' . get_the_modified_time( 'H:i', $id );
+	}
+	if ( 'date' === $column_name ) {
+		echo get_the_date( $id );
+	}
 }
 
-if (is_admin() ) {
-    add_filter('manage_posts_columns', 'Sl_Posts_columns', 999999);
-    add_action('manage_posts_custom_column', 'Sl_Posts_Custom_columns', 999999, 2);
+if ( is_admin() ) {
+	add_filter( 'manage_posts_columns', 'Sl_Posts_columns', 999999 );
+	add_action( 'manage_posts_custom_column', 'Sl_Posts_Custom_columns', 999999, 2 );
 }
