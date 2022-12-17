@@ -46,9 +46,7 @@ global $site_url,$site_name,$site_desc; ?>
                                                 aria-labelledby="<?php echo sanitize_title($item['title']); ?>">
                                         <?php foreach ( $item['submenu'] as $menu_subitem ) { ?>
                                                     <li class="white text-white">
-                                                        <a class="dropdown-item white text-white"<?php echo $menu_subitem['target']; ?>
-                                                           href="<?php echo $menu_subitem['url']; ?>">
-                                            <?php echo $menu_subitem['title']; ?>
+                                                        <a class="dropdown-item white text-white"<?php echo $menu_subitem['target']; ?> href="<?php echo $menu_subitem['url']; ?>"><?php echo $menu_subitem['title']; ?>
                                                         </a>
                                                     </li>
                                         <?php } ?>
@@ -56,9 +54,7 @@ global $site_url,$site_name,$site_desc; ?>
                                         </li>
                                     <?php } else { ?>
                                         <li class="nav-item <?php echo $item['classes']; ?>">
-                                            <a class="nav-link text-white"<?php echo $item['target']; ?>
-                                               href="<?php echo $item['url']; ?>">
-                                        <?php echo $item['title']; ?>
+                                            <a class="nav-link text-white"<?php echo $item['target']; ?> href="<?php echo $item['url']; ?>"><?php echo $item['title']; ?>
                                             </a>
                                         </li>
                                     <?php } ?>
