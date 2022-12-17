@@ -60,6 +60,13 @@ a:hover {
   color: #4B923A !important;
 }
 
+@media (min-width: 768px) {
+  .navbar-expand-md .navbar-nav .nav-link {
+	padding-right: 1rem;
+	padding-left: 1rem;
+  }
+}
+
 /* SHIFT */
 ul.shift li a,
 ul.shift li a:after,
@@ -73,7 +80,6 @@ ul.shift li a {
 }
 
 ul.shift li a:hover {
-  color: #91640F;
   text-decoration: none !important;
 }
 
@@ -89,7 +95,7 @@ ul.shift li a:after {
   height: 1px;
   content: '.';
   color: transparent;
-  background: #212A23;
+  background: #1E4515;
   visibility: hidden;
   opacity: 0;
   z-index: -1;
@@ -118,4 +124,46 @@ ul.shift li a:hover:after {
 img {
   width: 100%;
   max-width: 100%;
+}
+
+
+/* LOGO SHIFT */
+a.shift,
+a.shift:after,
+li a.shift:before {
+  transition: all .5s;
+}
+
+a.shift {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+a.shift:hover {
+  text-decoration: none !important;
+}
+
+a.shift:after {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+  height: 1px;
+  content: '.';
+  color: transparent;
+  background: #1E4515;
+  visibility: hidden;
+  opacity: 0;
+  z-index: -1;
+}
+
+a.shift:hover:after {
+  opacity: 1;
+  visibility: visible;
+  height: 100%;
 }
