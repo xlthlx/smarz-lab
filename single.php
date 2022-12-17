@@ -47,10 +47,10 @@ while ( have_posts() ) :
                         <?php the_content(); ?>
                     </div>
 
-                    <?php $cats = sl_get_the_terms('category');
+                    <?php $cats = Sl_Get_The_terms('category');
 
                     if (is_home() || is_front_page() ) {
-                        $cats = sl_get_the_terms('category', true);
+                        $cats = Sl_Get_The_terms('category', true);
                     }
 
                     if ('' !== $cats ) { ?>
@@ -68,7 +68,7 @@ while ( have_posts() ) :
                 </section>
 
                 <section id="comment-form" class="comment-box">
-                    <?php sl_comment_form(); ?>
+                    <?php Sl_Comment_form(); ?>
                 </section>
             </div>
 

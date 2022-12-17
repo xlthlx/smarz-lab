@@ -160,5 +160,5 @@ require_once __DIR__ . '/inc/ebay/index.php';
 /**
  * Toolkit.
  */
-require_once __DIR__ . '/inc/toolkit/toolkit.php';
+require_once __DIR__ . '/inc/toolkit-old/toolkit.php';
 

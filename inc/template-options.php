@@ -2,17 +2,22 @@
 /**
  * Theme options page.
  *
- * @package    WordPress
- * @subpackage Smarz Lab
+ * @category Theme
+ * @package  Smarz_Lab
+ * @author   Serena Piccioni <serena@piccioni.london>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://smarz-lab.com/
  */
 
 /**
- * @param $cmb
- * @param $args
+ * Modify message after post.
+ *
+ * @param object $cmb  CMB2.
+ * @param array  $args Arguments.
  *
  * @return void
  */
-function sl_cache_options_page_message_callback( $cmb, $args )
+function Sl_Cache_Options_Page_Message_callback( $cmb, $args )
 {
 
     if (! empty($args['should_notify']) ) {
@@ -30,9 +35,11 @@ function sl_cache_options_page_message_callback( $cmb, $args )
 }
 
 /**
+ * Register theme options.
+ *
  * @return void
  */
-function sl_register_theme_options()
+function Sl_Register_Theme_options()
 {
     $cmb_options = new_cmb2_box(
         array(
@@ -42,9 +49,9 @@ function sl_register_theme_options()
         'option_key'   => 'smarz_theme_options',
         'icon_url'     => 'dashicons-hammer',
         'menu_title'   => 'Opzioni',
-        'message_cb'   => 'sl_cache_options_page_message_callback',
+        'message_cb'   => 'Sl_Cache_Options_Page_Message_callback',
         'save_button'  => 'Aggiorna',
-        ) 
+        )
     );
 
     $cmb_options->add_field(
@@ -56,15 +63,23 @@ function sl_register_theme_options()
         'yes' => 'Si',
         ),
         'select_all_button' => false,
-        ) 
+        )
     );
 
 }
 
-add_action('cmb2_admin_init', 'sl_register_theme_options');
+add_action('cmb2_admin_init', 'Sl_Register_Theme_options');
 
-
-function updated_option_sl_cache( $option, $old_value, $value )
+/**
+ * Update option for eBay items.
+ *
+ * @param string $option    Name of the updated option.
+ * @param mixed  $old_value The old option value.
+ * @param mixed  $value     The new option value.
+ *
+ * @return void
+ */
+function Sl_Updated_Option_cache( $option, $old_value, $value )
 {
 
     if (( $option === 'smarz_theme_options' ) && isset($value['smarz_cache'][0]) && ($value['smarz_cache'][0]==='yes' ) ) {
@@ -77,4 +92,4 @@ function updated_option_sl_cache( $option, $old_value, $value )
 
 }
 
-add_filter('updated_option', 'updated_option_sl_cache', 10, 3);
+add_filter('updated_option', 'Sl_Updated_Option_cache', 10, 3);

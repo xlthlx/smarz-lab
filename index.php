@@ -27,7 +27,7 @@ $paged = ( get_query_var('paged') ) ?: 1;
         </div>
     </div>
 
-<?php sl_pagination($wp_query, $paged); ?>
+<?php Sl_pagination($wp_query, $paged); ?>
 <?php
 get_footer();
 

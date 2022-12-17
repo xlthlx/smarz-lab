@@ -28,7 +28,7 @@ global $charset;
     <?php if (! ( is_front_page() ) ) { ?>
         <div class="container">
             <nav class="pt-4 pb-2" style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
-        <?php sl_breadcrumbs(); ?>
+        <?php Sl_breadcrumbs(); ?>
             </nav>
         </div>
     <?php } else { ?>

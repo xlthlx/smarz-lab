@@ -18,7 +18,7 @@ $more = esc_html__('Keep reading: ', 'smarz-lab');
         <h2 class="mb-1 h1"><a href="<?php echo get_the_permalink(); ?>"><?php echo get_the_title(); ?></a></h2>
         <p class="text-muted"><?php echo get_the_date(); ?></p>
 
-        <p class="pr-4"><?php echo sl_get_excerpt(); ?>
+        <p class="pr-4"><?php echo Sl_Get_excerpt(); ?>
             <a title="<?php echo $more . get_the_title(); ?>" href="<?php echo get_the_permalink(); ?>"><?php echo esc_html__('Read more...', 'smarz-lab'); ?></a>
         </p>
         <hr/>
