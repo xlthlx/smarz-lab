@@ -16,6 +16,8 @@ require_once 'vendor.phar';
 
 add_filter( 'login_display_language_dropdown', '__return_false' );
 add_filter( 'wpcf7_load_js', '__return_false' );
+add_filter( 'wpcf7_load_css', '__return_false' );
+add_filter( 'enable_post_by_email_configuration', '__return_false' );
 
 /**
  * Set theme supports and image sizes.
@@ -102,7 +104,7 @@ function sl_enqueue_scripts() {
 	wp_deregister_style( 'classic-theme-styles' );
 	wp_dequeue_style( 'classic-theme-styles' );
 
-	wp_enqueue_style( 'main', get_template_directory_uri() . '/assets/css/main.min.css', array(), '' );
+	wp_enqueue_style( 'main', get_template_directory_uri() . '/assets/css/main.min.css', array(), '1.0' );
 
 	// Scripts.
 	wp_deregister_script( 'wp-embed' );
@@ -110,7 +112,7 @@ function sl_enqueue_scripts() {
 		wp_deregister_script( 'jquery' );
 		wp_deregister_script( 'wp-polyfill' );
 	}
-	wp_enqueue_script( 'main', get_template_directory_uri() . '/assets/js/main.min.js', array(), '', true );
+	wp_enqueue_script( 'main', get_template_directory_uri() . '/assets/js/main.min.js', array(), '1.0', true );
 }
 
 add_action( 'wp_enqueue_scripts', 'sl_enqueue_scripts' );
