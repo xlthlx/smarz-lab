@@ -105,6 +105,11 @@ function sl_enqueue_scripts() {
 	wp_enqueue_style( 'main', get_template_directory_uri() . '/assets/css/main.min.css', array(), '' );
 
 	// Scripts.
+	wp_deregister_script( 'wp-embed' );
+	if ( 'http://localhost' !== home_url() && ! is_admin() ) {
+		wp_deregister_script( 'jquery' );
+		wp_deregister_script( 'wp-polyfill' );
+	}
 	wp_enqueue_script( 'main', get_template_directory_uri() . '/assets/js/main.min.js', array(), '', true );
 }
 
