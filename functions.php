@@ -127,8 +127,8 @@ function sl_add_to_globals() {
 
 add_action( 'after_setup_theme', 'sl_add_to_globals' );
 
-if ( file_exists( dirname(__FILE__). '/inc/cmb2/cmb2/init.php' ) ) {
-	include_once dirname(__FILE__). '/inc/cmb2/cmb2/init.php';
+if ( file_exists( dirname( __FILE__ ) . '/inc/cmb2/cmb2/init.php' ) ) {
+	include_once dirname( __FILE__ ) . '/inc/cmb2/cmb2/init.php';
 }
 
 /**
