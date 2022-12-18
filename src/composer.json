@@ -1,8 +1,8 @@
 {
-  "name": "xlthlx/boot",
+  "name": "xlthlx/smarz-lab",
   "license": "MIT",
-  "description": "Boostrap for Boot theme",
-  "type":"css",
+  "description": "Boostrap for Smarz Lab theme",
+  "type": "../assets/css",
   "minimum-stability" : "stable",
   "require": {
     "twbs/bootstrap": "^5.0"

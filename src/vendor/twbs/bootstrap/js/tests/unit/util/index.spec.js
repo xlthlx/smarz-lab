@@ -1,4 +1,4 @@
-import * as Util from '../../../src/util/index'
+import * as Util from '../../../src/util'
 
 /** Test helpers */
 import { clearFixture, getFixture } from '../../helpers/fixture'

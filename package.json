@@ -13,10 +13,12 @@
 	"url": "git+https://github.com/xlthlx/smarz-lab"
   },
   "scripts": {
-	"minify:css": "cleancss -o assets/css/main.min.css assets/css/main.css",
+	"minify:js": "uglifyjs src/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js ../../../../wordpress/wp-includes/js/wp-embed.min.js ../../../../wordpress/wp-includes/js/comment-reply.js --compress --mangle --warn --output assets/js/main.min.js",
+	"minify:css": "cleancss -o assets/css/main.min.css src/vendor/twbs/bootstrap/dist/css/bootstrap.css src/css/main.css ../../../../wordpress/wp-includes/css/dist/block-library/style.min.css",
 	"watch:css": "onchange 'src/css/*.css' -- npm run minify:css",
+	"watch:js": "onchange 'src/js/*.js' -- npm run minify:js",
 	"watch": "run-p watch:*",
-	"build": "npm run minify:css"
+	"build": "npm run minify:css && npm run minify:js"
   },
   "devDependencies": {
 	"clean-css-cli": "^5.6.1",

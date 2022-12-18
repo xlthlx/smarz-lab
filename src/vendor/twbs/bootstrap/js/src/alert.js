@@ -8,7 +8,7 @@
 import {
   defineJQueryPlugin,
   getElementFromSelector
-} from './util/index'
+} from './util'
 import EventHandler from './dom/event-handler'
 import BaseComponent from './base-component'
 

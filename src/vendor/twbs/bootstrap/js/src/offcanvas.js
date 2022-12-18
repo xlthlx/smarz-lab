@@ -11,7 +11,7 @@ import {
   isDisabled,
   isVisible,
   typeCheckConfig
-} from './util/index'
+} from './util'
 import ScrollBarHelper from './util/scrollbar'
 import EventHandler from './dom/event-handler'
 import BaseComponent from './base-component'

@@ -9,7 +9,7 @@ import {
   defineJQueryPlugin,
   reflow,
   typeCheckConfig
-} from './util/index'
+} from './util'
 import EventHandler from './dom/event-handler'
 import Manipulator from './dom/manipulator'
 import BaseComponent from './base-component'

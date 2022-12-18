@@ -9,7 +9,7 @@ import Data from './dom/data'
 import {
   executeAfterTransition,
   getElement
-} from './util/index'
+} from './util'
 import EventHandler from './dom/event-handler'
 
 /**

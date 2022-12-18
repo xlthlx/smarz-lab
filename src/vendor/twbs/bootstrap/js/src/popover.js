@@ -5,7 +5,7 @@
  * --------------------------------------------------------------------------
  */
 
-import { defineJQueryPlugin } from './util/index'
+import { defineJQueryPlugin } from './util'
 import SelectorEngine from './dom/selector-engine'
 import Tooltip from './tooltip'
 

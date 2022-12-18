@@ -1,6 +1,6 @@
 import Tooltip from '../../src/tooltip'
 import EventHandler from '../../src/dom/event-handler'
-import { noop } from '../../src/util/index'
+import { noop } from '../../src/util'
 
 /** Test helpers */
 import { clearFixture, createEvent, getFixture, jQueryMock } from '../helpers/fixture'

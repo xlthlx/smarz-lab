@@ -1,5 +1,5 @@
 import Backdrop from '../../../src/util/backdrop'
-import { getTransitionDurationFromElement } from '../../../src/util/index'
+import { getTransitionDurationFromElement } from '../../../src/util'
 import { clearFixture, getFixture } from '../../helpers/fixture'
 
 const CLASS_BACKDROP = '.modal-backdrop'

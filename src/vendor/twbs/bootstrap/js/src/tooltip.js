@@ -16,7 +16,7 @@ import {
   isRTL,
   noop,
   typeCheckConfig
-} from './util/index'
+} from './util'
 import {
   DefaultAllowlist,
   sanitizeHtml
