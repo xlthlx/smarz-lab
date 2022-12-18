@@ -116,3 +116,31 @@ add_filter( 'manage_page_posts_columns', 'sl_hide_seo_columns', 20 );
 add_filter( 'manage_post_posts_columns', 'sl_hide_seo_columns', 20 );
 add_filter( 'manage_edit-category_columns', 'sl_hide_seo_columns', 20 );
 add_filter( 'manage_edit-tag_columns', 'sl_hide_seo_columns', 20 );
+
+/**
+ * Insert minified CSS into header.
+ *
+ * @return void
+ */
+function sl_insert_css() {
+	$file  = get_template_directory() . '/assets/css/main.min.css';
+	$style = sl_get_file_content( $file );
+
+	echo '<style id="all-styles-inline">' . $style . '</style>';
+}
+
+add_action( 'wp_head', 'sl_insert_css' );
+
+/**
+ * Insert minified JS into footer.
+ *
+ * @return void
+ */
+function sl_insert_scripts() {
+	$file   = get_template_directory() . '/assets/js/main.min.js';
+	$script = sl_get_file_content( $file );
+
+	echo '<script type="text/javascript">' . $script . '</script>';
+}
+
+add_action( 'wp_footer', 'sl_insert_scripts' );

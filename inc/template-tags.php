@@ -546,3 +546,28 @@ if ( ! function_exists( 'sl_get_excerpt' ) ) {
 		return $content;
 	}
 }
+
+if ( ! function_exists( 'sl_get_file_content' ) ) {
+	/**
+	 * This method gets the content of a given file.
+	 *
+	 * @param string $file_path The file path.
+	 *
+	 * @return  string Content of $file_path
+	 */
+	function sl_get_file_content( $file_path ) {
+
+		global $wp_filesystem;
+		require_once ABSPATH . '/wp-admin/includes/file.php';
+
+		WP_Filesystem();
+		$content = '';
+
+		if ( $wp_filesystem->exists( $file_path ) ) {
+			$content = $wp_filesystem->get_contents( $file_path );
+		}
+
+		return $content;
+
+	}
+}

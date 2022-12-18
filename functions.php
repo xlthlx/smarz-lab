@@ -162,3 +162,7 @@ require_once 'inc/ebay/index.php';
  */
 require_once 'inc/toolkit/index.php';
 
+/**
+ * Minify HTML.
+ */
+require_once 'inc/minify-html.php';
