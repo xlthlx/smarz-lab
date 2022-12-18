@@ -14,7 +14,7 @@
  *
  * @return void
  */
-function Sl_Remove_Comments_style() {
+function sl_remove_comments_style() {
 	global $wp_widget_factory;
 
 	$widget_recent_comments = isset( $wp_widget_factory->widgets['WP_Widget_Recent_Comments'] ) ? $wp_widget_factory->widgets['WP_Widget_Recent_Comments'] : null;
@@ -35,7 +35,7 @@ function Sl_Remove_Comments_style() {
  *
  * @return void
  */
-function Sl_Disable_links() { 
+function sl_disable_links() {
 	remove_action( 'wp_head', 'adjacent_posts_rel_link' );
 	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head' );
 	remove_action( 'template_redirect', 'wp_shortlink_header', 11 );
@@ -44,9 +44,9 @@ function Sl_Disable_links() {
 	remove_action( 'wp_head', 'wp_shortlink_wp_head' );
 	remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
 
-	add_action( 'widgets_init', 'Sl_Remove_Comments_style' );
+	add_action( 'widgets_init', 'sl_remove_comments_style' );
 }
 
 if ( ! is_admin() ) {
-	add_action( 'init', 'Sl_Disable_links' );
+	add_action( 'init', 'sl_disable_links' );
 }

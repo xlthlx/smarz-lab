@@ -12,8 +12,8 @@
 global $wp_query;
 get_header();
 
-$archive_title = esc_html__( 'Archive', 'smarzlab' );
-$month = get_the_time( 'F' );
+$archive_title = esc_html__( 'Archive', 'smarz-lab' );
+$month         = get_the_time( 'F' );
 
 if ( is_day() ) {
 	$archive_title = get_the_date( 'd' ) . ' ' . $month . ' ' . get_the_date( 'Y' );
@@ -29,7 +29,7 @@ if ( is_day() ) {
 	$archive_title = post_type_archive_title( '', false );
 }
 
-$archive_paged = ( get_query_var( 'paged' ) ) ?: 1;
+$archive_paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 ?>
 	<div class="container">
 		<div class="row">
@@ -50,6 +50,6 @@ $archive_paged = ( get_query_var( 'paged' ) ) ?: 1;
 			</div>
 		</div>
 	</div>
-<?php Sl_pagination( $wp_query, $archive_paged ); ?>
+<?php sl_pagination( $wp_query, $archive_paged ); ?>
 <?php
 get_footer();

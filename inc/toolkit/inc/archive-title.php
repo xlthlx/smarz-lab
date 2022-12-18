@@ -16,7 +16,7 @@
  *
  * @return string The modified title.
  */
-function Sl_Remove_Archive_Title_prefix( $title ) { 
+function sl_remove_archive_title_prefix( $title ) {
 	$single_cat_title = single_term_title( '', false );
 	if ( is_category() || is_tag() || is_tax() ) {
 		return esc_html( $single_cat_title );
@@ -25,4 +25,4 @@ function Sl_Remove_Archive_Title_prefix( $title ) {
 	return $title;
 }
 
-add_filter( 'get_the_archive_title', 'Sl_Remove_Archive_Title_prefix' );
+add_filter( 'get_the_archive_title', 'sl_remove_archive_title_prefix' );

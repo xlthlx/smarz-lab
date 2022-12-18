@@ -9,7 +9,7 @@
  * @link     https://smarz-lab.com/
  */
 
-if ( ! function_exists( 'Sl_Get_link' ) ) {
+if ( ! function_exists( 'sl_get_link' ) ) {
 	/**
 	 * Set up the single link.
 	 *
@@ -20,7 +20,7 @@ if ( ! function_exists( 'Sl_Get_link' ) ) {
 	 *
 	 * @return string
 	 */
-	function Sl_Get_link( $args, $link, $name, $position ) {
+	function sl_get_link( $args, $link, $name, $position ) {
 		$return  = $args['before'];
 		$return .= sprintf(
 			$args['link'],
@@ -34,13 +34,13 @@ if ( ! function_exists( 'Sl_Get_link' ) ) {
 	}
 }
 
-if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
+if ( ! function_exists( 'sl_breadcrumbs' ) ) {
 	/**
 	 * Breadcrumbs.
 	 *
 	 * @return void
 	 */
-	function Sl_breadcrumbs() {
+	function sl_breadcrumbs() {
 
 		$args = array(
 			'before'        => '<li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">',
@@ -63,10 +63,10 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 
 		global $post;
 		$home_url  = home_url( '/' );
-		$parent_id = $post->post_parent ?? 0;
+		$parent_id = ( $post->post_parent ) ? $post->post_parent : 0;
 		$title     = get_the_title();
 
-		$home_link = Sl_Get_link( $args, $home_url, $args['text']['home'], 1 );
+		$home_link = sl_get_link( $args, $home_url, $args['text']['home'], 1 );
 
 		if ( ! is_front_page() ) {
 
@@ -80,11 +80,11 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 				$parents = get_ancestors( get_query_var( 'cat' ), 'category' );
 				foreach ( array_reverse( $parents ) as $cat ) {
 					$position ++;
-					echo Sl_Get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
+					echo sl_get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
 				}
 				if ( get_query_var( 'paged' ) ) {
 					$position ++;
-					echo Sl_Get_link( $args, get_category_link( get_query_var( 'cat' ) ), get_cat_name( get_query_var( 'cat' ) ), $position );
+					echo sl_get_link( $args, get_category_link( get_query_var( 'cat' ) ), get_cat_name( get_query_var( 'cat' ) ), $position );
 					echo $args['before'] . sprintf( $args['text']['page'], get_query_var( 'paged' ) );
 
 				} else {
@@ -95,7 +95,7 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 				if ( get_query_var( 'paged' ) ) {
 
 					$position ++;
-					echo Sl_Get_link( $args, $home_url . '?s=' . get_search_query(), sprintf( $args['text']['search'], get_search_query() ), $position );
+					echo sl_get_link( $args, $home_url . '?s=' . get_search_query(), sprintf( $args['text']['search'], get_search_query() ), $position );
 					echo $args['before'] . sprintf( $args['text']['page'], get_query_var( 'paged' ) );
 
 				} else {
@@ -114,7 +114,7 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 			} elseif ( is_month() ) {
 
 				$position ++;
-				echo Sl_Get_link( $args, get_year_link( get_the_time( 'Y' ) ), get_the_time( 'Y' ), $position );
+				echo sl_get_link( $args, get_year_link( get_the_time( 'Y' ) ), get_the_time( 'Y' ), $position );
 
 				$position ++;
 				echo $args['before_active'] . sprintf( $args['active'], get_permalink(), get_the_time( 'F' ) ) . sprintf( $args['position'], $position );
@@ -122,10 +122,10 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 			} elseif ( is_day() ) {
 
 				$position ++;
-				echo Sl_Get_link( $args, get_year_link( get_the_time( 'Y' ) ), get_the_time( 'Y' ), $position );
+				echo sl_get_link( $args, get_year_link( get_the_time( 'Y' ) ), get_the_time( 'Y' ), $position );
 
 				$position ++;
-				echo Sl_Get_link( $args, get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ), get_the_time( 'F' ), $position );
+				echo sl_get_link( $args, get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ), get_the_time( 'F' ), $position );
 
 
 				$position ++;
@@ -135,24 +135,24 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 				$post_type = get_post_type_object( get_post_type() );
 				if ( $post_type && get_post_type() !== 'post' ) {
 					$position ++;
-					echo Sl_Get_link( $args, get_post_type_archive_link( $post_type->name ), $post_type->labels->name, $position );
+					echo sl_get_link( $args, get_post_type_archive_link( $post_type->name ), $post_type->labels->name, $position );
 					$position ++;
 					$args['before_active'] . sprintf( $args['active'], get_permalink(), $title ) . sprintf( $args['position'], $position );
 
 				} else {
 					$cat       = get_the_category();
-					$catID     = $cat[0]->cat_ID;
-					$parents   = array_reverse( get_ancestors( $catID, 'category' ) );
-					$parents[] = $catID;
+					$cat_id    = $cat[0]->cat_ID;
+					$parents   = array_reverse( get_ancestors( $cat_id, 'category' ) );
+					$parents[] = $cat_id;
 
 					foreach ( $parents as $cat ) {
 						$position ++;
-						echo Sl_Get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
+						echo sl_get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
 					}
 
 					if ( get_query_var( 'cpage' ) ) {
 						$position ++;
-						echo Sl_Get_link( $args, get_permalink(), $title, $position );
+						echo sl_get_link( $args, get_permalink(), $title, $position );
 
 						$position ++;
 						echo $args['before_active'] . sprintf( $args['active'], get_permalink(), sprintf( $args['text']['cpage'], get_query_var( 'cpage' ) ) ) . sprintf( $args['position'], $position );
@@ -168,7 +168,7 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 				if ( $post_type && get_query_var( 'paged' ) ) {
 
 					$position ++;
-					echo Sl_Get_link( $args, get_post_type_archive_link( $post_type->name ), $post_type->label, $position );
+					echo sl_get_link( $args, get_post_type_archive_link( $post_type->name ), $post_type->label, $position );
 
 					$position ++;
 					echo $args['before_active'] . sprintf( $args['active'], get_permalink(), sprintf( $args['text']['page'], get_query_var( 'paged' ) ) ) . sprintf( $args['position'], $position );
@@ -177,20 +177,20 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 					$position ++;
 					echo $args['before_active'] . sprintf( $args['active'], get_permalink(), $post_type->label ) . sprintf( $args['position'], $position );
 
-				}           
+				}
 			} elseif ( is_attachment() ) {
 				$parent    = get_post( $parent_id );
 				$cat       = get_the_category( $parent->ID );
-				$catID     = $cat[0]->cat_ID;
-				$parents   = array_reverse( get_ancestors( $catID, 'category' ) );
-				$parents[] = $catID;
+				$cat_id    = $cat[0]->cat_ID;
+				$parents   = array_reverse( get_ancestors( $cat_id, 'category' ) );
+				$parents[] = $cat_id;
 				foreach ( $parents as $cat ) {
 					$position ++;
-					echo Sl_Get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
+					echo sl_get_link( $args, get_category_link( $cat ), get_cat_name( $cat ), $position );
 				}
 
 				$position ++;
-				echo Sl_Get_link( $args, get_permalink( $parent ), $parent->post_title, $position );
+				echo sl_get_link( $args, get_permalink( $parent ), $parent->post_title, $position );
 
 				$position ++;
 				echo $args['before_active'] . sprintf( $args['active'], get_permalink(), $title ) . sprintf( $args['position'], $position );
@@ -202,9 +202,9 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 
 			} elseif ( $parent_id && is_page() ) {
 				$parents = get_post_ancestors( get_the_ID() );
-				foreach ( array_reverse( $parents ) as $pageID ) {
+				foreach ( array_reverse( $parents ) as $page_id ) {
 					$position ++;
-					echo Sl_Get_link( $args, get_page_link( $pageID ), get_the_title( $pageID ), $position );
+					echo sl_get_link( $args, get_page_link( $page_id ), get_the_title( $page_id ), $position );
 				}
 
 				$position ++;
@@ -217,8 +217,8 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 			} elseif ( is_tag() ) {
 				if ( get_query_var( 'paged' ) ) {
 					$position ++;
-					$tagID = get_query_var( 'tag_id' );
-					echo Sl_Get_link( $args, get_tag_link( $tagID ), single_tag_title( '', false ), $position );
+					$tag_ID = get_query_var( 'tag_id' );
+					echo sl_get_link( $args, get_tag_link( $tag_ID ), single_tag_title( '', false ), $position );
 
 					$position ++;
 					echo $args['before_active'] . sprintf( $args['active'], get_permalink(), sprintf( $args['text']['page'], get_query_var( 'paged' ) ) ) . sprintf( $args['position'], $position );
@@ -233,7 +233,7 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 				if ( get_query_var( 'paged' ) ) {
 
 					$position ++;
-					echo Sl_Get_link( $args, get_author_posts_url( $author->ID ), sprintf( $args['text']['author'], $author->display_name ), $position );
+					echo sl_get_link( $args, get_author_posts_url( $author->ID ), sprintf( $args['text']['author'], $author->display_name ), $position );
 
 					$position ++;
 					echo $args['before_active'] . sprintf( $args['active'], get_permalink(), sprintf( $args['text']['page'], get_query_var( 'paged' ) ) ) . sprintf( $args['position'], $position );
@@ -259,7 +259,7 @@ if ( ! function_exists( 'Sl_breadcrumbs' ) ) {
 	}
 }
 
-if ( ! function_exists( 'Sl_Comment_form' ) ) {
+if ( ! function_exists( 'sl_comment_form' ) ) {
 	/**
 	 * Custom comments form.
 	 *
@@ -267,29 +267,29 @@ if ( ! function_exists( 'Sl_Comment_form' ) ) {
 	 *
 	 * @return void
 	 */
-	function Sl_Comment_form( $post_id = false ) {
+	function sl_comment_form( $post_id = false ) {
 
 		$comments_args = array(
 			'format'               => 'xhtml',
-			'comment_notes_before' => '<p>' . __( 'Your email address will not be published.' ) . '</p>',
+			'comment_notes_before' => '<p>' . __( 'Your email address will not be published.', 'smarz-lab' ) . '</p>',
 			'class_submit'         => 'btn btn-outline-dark rounded-0',
 			'fields'               => array(
 				'author' => '<div class="form-floating mb-3">
-							<input placeholder="' . __( 'Author' ) . '" class="form-control rounded-0" type="text" id="author" name="author" required>
-							<label for="author">' . __( 'Author' ) . ' (' . __( 'required' ) . ')</label>
+							<input placeholder="' . __( 'Author', 'smarz-lab' ) . '" class="form-control rounded-0" type="text" id="author" name="author" required>
+							<label for="author">' . __( 'Author', 'smarz-lab' ) . ' (' . __( 'required', 'smarz-lab' ) . ')</label>
 						</div>',
 				'email'  => '<div class="form-floating mb-3">
-							<input placeholder="' . __( 'Email' ) . '" class="form-control rounded-0" type="email" id="email" name="email" required>
-							<label for="email">' . __( 'Email' ) . ' (' . __( 'required' ) . ')</label>
+							<input placeholder="' . __( 'Email', 'smarz-lab' ) . '" class="form-control rounded-0" type="email" id="email" name="email" required>
+							<label for="email">' . __( 'Email', 'smarz-lab' ) . ' (' . __( 'required', 'smarz-lab' ) . ')</label>
 						</div>',
 				'url'    => '<div class="form-floating mb-3">
-							<input placeholder="' . __( 'Url' ) . '" class="form-control rounded-0" type="url" id="url" name="url">
-							<label for="url">' . __( 'Url' ) . '</label>
+							<input placeholder="' . __( 'Url', 'smarz-lab' ) . '" class="form-control rounded-0" type="url" id="url" name="url">
+							<label for="url">' . __( 'Url', 'smarz-lab' ) . '</label>
 						</div>',
 			),
 			'comment_field'        => '<div class="form-floating mb-3">
-								<textarea placeholder="' . __( 'Comment' ) . '" class="form-control rounded-0" id="comment" name="comment" style="height: 150px" required></textarea>
-								<label for="comment">' . __( 'Comment' ) . ' (' . __( 'required' ) . ')</label>
+								<textarea placeholder="' . __( 'Comment', 'smarz-lab' ) . '" class="form-control rounded-0" id="comment" name="comment" style="height: 150px" required></textarea>
+								<label for="comment">' . __( 'Comment', 'smarz-lab' ) . ' (' . __( 'required', 'smarz-lab' ) . ')</label>
 								</div>',
 		);
 
@@ -301,7 +301,7 @@ if ( ! function_exists( 'Sl_Comment_form' ) ) {
 	}
 }
 
-if ( ! function_exists( 'Sl_Get_Menu_items' ) ) {
+if ( ! function_exists( 'sl_get_menu_items' ) ) {
 	/**
 	 * Get a menu as array from location.
 	 *
@@ -309,7 +309,7 @@ if ( ! function_exists( 'Sl_Get_Menu_items' ) ) {
 	 *
 	 * @return array
 	 */
-	function Sl_Get_Menu_items( $theme_location ) {
+	function sl_get_menu_items( $theme_location ) {
 
 		$locations = get_nav_menu_locations();
 		if ( ( $locations ) && isset( $locations[ $theme_location ] ) ) {
@@ -321,7 +321,7 @@ if ( ! function_exists( 'Sl_Get_Menu_items' ) ) {
 
 			$i = 0;
 			foreach ( $menu_items as $menu_item ) {
-				if ( (int) $menu_item->menu_item_parent === 0 ) {
+				if ( 0 === (int) $menu_item->menu_item_parent ) {
 
 					$parent     = $menu_item->ID;
 					$menu_array = array();
@@ -330,14 +330,14 @@ if ( ! function_exists( 'Sl_Get_Menu_items' ) ) {
 					foreach ( $menu_items as $submenu ) {
 						if ( isset( $submenu ) && (int) $submenu->menu_item_parent === (int) $parent ) {
 							$bool       = true;
-							$menu_array = Sl_Get_arr( $submenu, $menu_array, $y );
+							$menu_array = sl_get_arr( $submenu, $menu_array, $y );
 							$y ++;
 						}
 					}
 
-					$menu_list = Sl_Get_arr( $menu_item, $menu_list, $i );
+					$menu_list = sl_get_arr( $menu_item, $menu_list, $i );
 
-					if ( $bool === true && count( $menu_array ) > 0 ) {
+					if ( true === $bool && count( $menu_array ) > 0 ) {
 						$menu_list[ $i ]['submenu'] = $menu_array;
 					}
 					$i ++;
@@ -359,7 +359,7 @@ if ( ! function_exists( 'Sl_Get_Menu_items' ) ) {
 	 *
 	 * @return array
 	 */
-	function Sl_Get_arr( $menu, array $menu_array, int $i ): array {
+	function sl_get_arr( $menu, $menu_array, $i ) {
 
 		$menu_array[ $i ]['url']     = $menu->url;
 		$menu_array[ $i ]['title']   = $menu->title;
@@ -370,7 +370,7 @@ if ( ! function_exists( 'Sl_Get_Menu_items' ) ) {
 	}
 }
 
-if ( ! function_exists( 'Sl_pagination' ) ) {
+if ( ! function_exists( 'sl_pagination' ) ) {
 	/**
 	 * Pagination.
 	 *
@@ -379,7 +379,7 @@ if ( ! function_exists( 'Sl_pagination' ) ) {
 	 *
 	 * @return void
 	 */
-	function Sl_pagination( $wp_query, $paged ) {
+	function sl_pagination( $wp_query, $paged ) {
 		global $lang;
 
 		$first    = 'Primo';
@@ -483,7 +483,7 @@ if ( ! function_exists( 'Sl_pagination' ) ) {
 	}
 }
 
-if ( ! function_exists( 'Sl_Get_The_terms' ) ) {
+if ( ! function_exists( 'sl_get_the_terms' ) ) {
 
 	/**
 	 * Function to return list of the terms.
@@ -493,7 +493,7 @@ if ( ! function_exists( 'Sl_Get_The_terms' ) ) {
 	 *
 	 * @return string Returns the list of elements.
 	 */
-	function Sl_Get_The_terms( $taxonomy, $cut = false ) {
+	function sl_get_the_terms( $taxonomy, $cut = false ) {
 
 		$all_terms = '';
 		$terms     = get_the_terms( get_the_ID(), $taxonomy );
@@ -520,16 +520,16 @@ if ( ! function_exists( 'Sl_Get_The_terms' ) ) {
 	}
 }
 
-if ( ! function_exists( 'Sl_Get_excerpt' ) ) {
+if ( ! function_exists( 'sl_get_excerpt' ) ) {
 	/**
 	 * Set up an excerpt from $content.
 	 *
 	 * @param int $length The excerpt length.
 	 *
 	 * @return string
-	 * @throws Exception
+	 * @throws Exception Exception.
 	 */
-	function Sl_Get_excerpt( int $length = 50 ) {
+	function sl_get_excerpt( $length = 50 ) {
 
 		$content = get_the_content();
 

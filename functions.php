@@ -12,7 +12,7 @@
 /**
  * Load vendors.
  */
-require_once __DIR__ . '/vendor.phar';
+require_once 'vendor.phar';
 
 add_filter( 'login_display_language_dropdown', '__return_false' );
 add_filter( 'wpcf7_load_js', '__return_false' );
@@ -22,7 +22,7 @@ add_filter( 'wpcf7_load_js', '__return_false' );
  *
  * @return void
  */
-function Sl_Add_supports() { 
+function sl_add_supports() {
 	add_theme_support( 'block-templates' );
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
@@ -51,14 +51,14 @@ function Sl_Add_supports() {
 	add_image_size( 'hero', 800, 450, true );
 }
 
-add_action( 'init', 'Sl_Add_supports' );
+add_action( 'init', 'sl_add_supports' );
 
 /**
  * Register main and footer menu.
  *
  * @return void
  */
-function Sl_Register_menus() {
+function sl_register_menus() {
 	register_nav_menus(
 		array(
 			'primary' => 'Main',
@@ -67,14 +67,14 @@ function Sl_Register_menus() {
 	);
 }
 
-add_action( 'init', 'Sl_Register_menus' );
+add_action( 'init', 'sl_register_menus' );
 
 /**
  * Register widget area.
  *
  * @return void
  */
-function Sl_Widgets_init() {
+function sl_widgets_init() {
 	register_sidebar(
 		array(
 			'name'          => esc_html__( 'Sidebar', 'smarz-lab' ),
@@ -89,14 +89,14 @@ function Sl_Widgets_init() {
 
 }
 
-add_action( 'widgets_init', 'Sl_Widgets_init' );
+add_action( 'widgets_init', 'sl_widgets_init' );
 
 /**
  * Enqueue scripts and styles.
  *
  * @return void
  */
-function Sl_Enqueue_scripts() {
+function sl_enqueue_scripts() {
 	 // Styles.
 	wp_enqueue_style( 'boot-main', get_template_directory_uri() . '/assets/vendor/twbs/bootstrap/dist/css/bootstrap.css', array(), filemtime( get_template_directory() . '/assets/vendor/twbs/bootstrap/dist/css/bootstrap.css' ) );
 	wp_enqueue_style( 'main', get_template_directory_uri() . '/assets/css/main.min.css', array(), filemtime( get_template_directory() . '/assets/css/main.min.css' ) );
@@ -109,7 +109,7 @@ function Sl_Enqueue_scripts() {
 	}
 }
 
-add_action( 'wp_enqueue_scripts', 'Sl_enqueue_scripts' );
+add_action( 'wp_enqueue_scripts', 'sl_enqueue_scripts' );
 
 
 /**
@@ -117,7 +117,7 @@ add_action( 'wp_enqueue_scripts', 'Sl_enqueue_scripts' );
  *
  * @return void
  */
-function Sl_Add_To_globals() {
+function sl_add_to_globals() {
 	global $charset,$site_url,$site_name,$site_desc;
 	$charset   = get_bloginfo( 'charset' );
 	$site_url  = home_url( '/' );
@@ -125,34 +125,34 @@ function Sl_Add_To_globals() {
 	$site_desc = get_bloginfo( 'description' );
 }
 
-add_action( 'after_setup_theme', 'Sl_Add_To_globals' );
+add_action( 'after_setup_theme', 'sl_add_to_globals' );
 
-if ( file_exists( __DIR__ . '/inc/cmb2/cmb2/init.php' ) ) {
-	include_once __DIR__ . '/inc/cmb2/cmb2/init.php';
+if ( file_exists( 'inc/cmb2/cmb2/init.php' ) ) {
+	include_once 'inc/cmb2/cmb2/init.php';
 }
 
 /**
  * Functions which enhance the theme by hooking into WordPress.
  */
-require_once __DIR__ . '/inc/template-functions.php';
+require_once 'inc/template-functions.php';
 
 /**
  * Theme options.
  */
-require_once __DIR__ . '/inc/template-options.php';
+require_once 'inc/template-options.php';
 
 /**
  * Custom template tags.
  */
-require_once __DIR__ . '/inc/template-tags.php';
+require_once 'inc/template-tags.php';
 
 /**
  * EBay API.
  */
-require_once __DIR__ . '/inc/ebay/index.php';
+require_once 'inc/ebay/index.php';
 
 /**
  * Toolkit.
  */
-require_once __DIR__ . '/inc/toolkit/index.php';
+require_once 'inc/toolkit/index.php';
 

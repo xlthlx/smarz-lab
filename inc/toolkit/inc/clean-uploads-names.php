@@ -16,7 +16,7 @@
  *
  * @return array The file information with the cleaned or original filename.
  */
-function Sl_Upload_filter( $file ) { 
+function sl_upload_filter( $file ) {
 	$original_filename = pathinfo( $file['name'] );
 	set_transient(
 		'_clean_image_filenames_original_filename',
@@ -48,7 +48,7 @@ function Sl_Upload_filter( $file ) {
  *
  * @return void
  */
-function Sl_Update_Attachment_title( $attachment_id ) { 
+function sl_update_attachment_title( $attachment_id ) {
 	$original_filename = get_transient( '_clean_image_filenames_original_filename' );
 
 	if ( $original_filename ) {
@@ -63,6 +63,6 @@ function Sl_Update_Attachment_title( $attachment_id ) {
 }
 
 if ( is_admin() ) {
-	add_action( 'wp_handle_upload_prefilter', 'Sl_Upload_filter' );
-	add_action( 'add_attachment', 'Sl_Update_Attachment_title' );
+	add_action( 'wp_handle_upload_prefilter', 'sl_upload_filter' );
+	add_action( 'add_attachment', 'sl_update_attachment_title' );
 }

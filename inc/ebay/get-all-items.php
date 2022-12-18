@@ -9,19 +9,22 @@
  * @link     https://smarz-lab.com/
  */
 
+// @codingStandardsIgnoreStart
 use DTS\eBaySDK\Constants;
 use DTS\eBaySDK\Finding\Services;
 use DTS\eBaySDK\Finding\Types;
+// @codingStandardsIgnoreEnd
 
 /**
- * Get all itemas.
+ * Get all items.
  *
  * @return array
  */
-function getAllItems(): array {
+function sl_get_ebay_all_items() {
 	global $config;
 	$return = array();
 
+	// @codingStandardsIgnoreStart
 	$service = new Services\FindingService(
 		array(
 			'credentials' => $config['production']['credentials'],
@@ -60,7 +63,7 @@ function getAllItems(): array {
 		if ( $total !== 0 ) {
 			foreach ( $response->searchResult->item as $item ) {
 
-				$object                               = getItem( $item );
+				$object                               = sl_get_ebay_item( $item );
 				$return['Pagina'][1][ $item->itemId ] = $object;
 
 			}
@@ -77,11 +80,13 @@ function getAllItems(): array {
 
 			foreach ( $response->searchResult->item as $item ) {
 
-				$object                                        = getItem( $item );
+				$object                                        = sl_get_ebay_item( $item );
 				$return['Pagina'][ $pageNum ][ $item->itemId ] = $object;
 			}
 		}
 	}
+
+	// @codingStandardsIgnoreEnd
 
 	return $return;
 }
@@ -93,7 +98,9 @@ function getAllItems(): array {
  *
  * @return array
  */
-function getItem( Types\SearchItem $item ): array {
+function sl_get_ebay_item( $item ) {
+
+	// @codingStandardsIgnoreStart
 
 	$object['Titolo'] = $item->title;
 
@@ -118,6 +125,8 @@ function getItem( Types\SearchItem $item ): array {
 	}
 
 	$object['Debug'] = '<pre>' . print_r( $item, true ) . '</pre><br/><br/>';
+
+	// @codingStandardsIgnoreEnd
 
 	return $object;
 }

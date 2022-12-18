@@ -14,7 +14,7 @@
  *
  * @return void
  */
-function Sl_Last_Mod_header() {
+function sl_last_mod_header() {
 	if ( is_singular() ) {
 		$post_id = get_queried_object_id();
 		if ( $post_id ) {
@@ -23,4 +23,4 @@ function Sl_Last_Mod_header() {
 	}
 }
 
-add_action( 'wp_headers', 'Sl_Last_Mod_header' );
+add_action( 'wp_headers', 'sl_last_mod_header' );

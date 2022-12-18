@@ -33,7 +33,7 @@ global $site_url,$site_name,$site_desc; ?>
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12 text-md-center">
-							<?php $items = Sl_Get_Menu_items( 'primary' ); ?>
+							<?php $items = sl_get_menu_items( 'primary' ); ?>
 							<ul class="shift navbar-nav justify-content-end me-3 mt-4 pt-3 mb-md-0 text-uppercase">
 								<?php foreach ( $items as $item ) { ?>
 									<?php if ( isset( $item['submenu'] ) ) { ?>

@@ -16,15 +16,15 @@
  *
  * @return array $columns
  */
-function Sl_Page_Column_views( $columns ) {
+function sl_page_column_views( $columns ) {
 	 unset( $columns['comments'], $columns['date'] );
 
 	return array_merge(
 		$columns,
 		array(
-			'page-layout' => __( 'Template', 'xlthlx' ),
-			'modified'    => __( 'Data ultima modifica', 'xlthlx' ),
-			'date'        => __( 'Date', 'xlthlx' ),
+			'thumbs'   => __( 'Thumbnail', 'smarz-lab' ),
+			'modified' => __( 'Last modified', 'smarz-lab' ),
+			'date'     => __( 'Date', 'smarz-lab' ),
 		)
 	);
 
@@ -38,7 +38,7 @@ function Sl_Page_Column_views( $columns ) {
  *
  * @return void
  */
-function Sl_Page_Custom_Column_views( $column_name, $id ) {
+function sl_page_custom_column_views( $column_name, $id ) {
 	if ( 'page-layout' === $column_name ) {
 		$set_template = get_post_meta(
 			get_the_ID(),
@@ -66,6 +66,6 @@ function Sl_Page_Custom_Column_views( $column_name, $id ) {
 }
 
 if ( is_admin() ) {
-	add_filter( 'manage_pages_columns', 'Sl_Page_Column_views', 9999 );
-	add_action( 'manage_pages_custom_column', 'Sl_Page_Custom_Column_views', 9999, 2 );
+	add_filter( 'manage_pages_columns', 'sl_page_column_views', 9999 );
+	add_action( 'manage_pages_custom_column', 'sl_page_custom_column_views', 9999, 2 );
 }

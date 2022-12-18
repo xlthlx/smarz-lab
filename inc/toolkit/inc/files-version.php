@@ -16,7 +16,7 @@
  *
  * @return string
  */
-function Sl_Change_Version_From_Style_js( $src ) { 
+function sl_change_version_from_style_js( $src ) {
 	if ( ! is_admin() ) {
 
 		$clean_src  = $src ? esc_url( remove_query_arg( 'ver', $src ) ) : false;
@@ -84,6 +84,6 @@ function Sl_Change_Version_From_Style_js( $src ) {
 }
 
 if ( ! is_admin() ) {
-	add_filter( 'style_loader_src', 'Sl_Change_Version_From_Style_js', 9999, 1 );
-	add_filter( 'script_loader_src', 'Sl_Change_Version_From_Style_js', 9999, 1 );
+	add_filter( 'style_loader_src', 'sl_change_version_from_style_js', 9999, 1 );
+	add_filter( 'script_loader_src', 'sl_change_version_from_style_js', 9999, 1 );
 }

@@ -14,8 +14,8 @@
  *
  * @return void
  */
-function Sl_Clean_Meta_generators() {
-	ob_start( 'Sl_Replace_Meta_generators' );
+function sl_clean_meta_generators() {
+	ob_start( 'sl_replace_meta_generators' );
 }
 
 /**
@@ -26,7 +26,7 @@ function Sl_Clean_Meta_generators() {
  *
  * @return string
  */
-function Sl_Replace_Meta_generators( $html ) {
+function sl_replace_meta_generators( $html ) {
 	$raw_html = $html;
 
 	$pattern = '/<meta[^>]+name=["\']generator["\'][^>]+>/i';
@@ -44,13 +44,13 @@ function Sl_Replace_Meta_generators( $html ) {
  *
  * @return void
  */
-function Sl_Remove_WordPress_version() { 
+function sl_remove_word_press_version() {
 	remove_action( 'wp_head', 'wp_generator' );
 	add_filter( 'the_generator', '__return_empty_string' );
 
-	add_action( 'wp_head', 'Sl_Clean_Meta_generators', 100 );
+	add_action( 'wp_head', 'sl_clean_meta_generators', 100 );
 }
 
 if ( ! is_admin() ) {
-	add_action( 'init', 'Sl_Remove_WordPress_version' );
+	add_action( 'init', 'sl_remove_word_press_version' );
 }

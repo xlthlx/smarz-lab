@@ -17,14 +17,14 @@
  *
  * @return void
  */
-function Sl_Cache_Options_Page_Message_callback( $cmb, $args ) { 
+function sl_cache_options_page_message_callback( $cmb, $args ) {
 	if ( ! empty( $args['should_notify'] ) ) {
 
 		if ( $args['is_updated'] ) {
 			$args['message'] = 'Tutti i prodotti aggiornati.';
 		}
 
-		if ( $args['is_updated'] === '' ) {
+		if ( '' === $args['is_updated'] ) {
 			$args['message'] = 'Nessun prodotto aggiornato.';
 		}
 
@@ -37,7 +37,7 @@ function Sl_Cache_Options_Page_Message_callback( $cmb, $args ) {
  *
  * @return void
  */
-function Sl_Register_Theme_options() {
+function sl_register_theme_options() {
 	$cmb_options = new_cmb2_box(
 		array(
 			'id'           => 'smarz_theme_options_page',
@@ -46,7 +46,7 @@ function Sl_Register_Theme_options() {
 			'option_key'   => 'smarz_theme_options',
 			'icon_url'     => 'dashicons-hammer',
 			'menu_title'   => 'Opzioni',
-			'message_cb'   => 'Sl_Cache_Options_Page_Message_callback',
+			'message_cb'   => 'sl_cache_options_page_message_callback',
 			'save_button'  => 'Aggiorna',
 		)
 	);
@@ -65,7 +65,7 @@ function Sl_Register_Theme_options() {
 
 }
 
-add_action( 'cmb2_admin_init', 'Sl_Register_Theme_options' );
+add_action( 'cmb2_admin_init', 'sl_register_theme_options' );
 
 /**
  * Update option for eBay items.
@@ -76,15 +76,15 @@ add_action( 'cmb2_admin_init', 'Sl_Register_Theme_options' );
  *
  * @return void
  */
-function Sl_Updated_Option_cache( $option, $old_value, $value ) { 
-	if ( ( $option === 'smarz_theme_options' ) && isset( $value['smarz_cache'][0] ) && ( $value['smarz_cache'][0] === 'yes' ) ) {
+function sl_updated_option_cache( $option, $old_value, $value ) {
+	if ( ( 'smarz_theme_options' === $option ) && isset( $value['smarz_cache'][0] ) && ( 'yes' === $value['smarz_cache'][0] ) ) {
 
 		update_option( 'smarz_theme_options', $old_value );
 
 		delete_transient( 'ebay_items' );
-		set_transient( 'ebay_items', getAllItems(), 12 * HOUR_IN_SECONDS );
+		set_transient( 'ebay_items', sl_get_ebay_all_items(), 12 * HOUR_IN_SECONDS );
 	}
 
 }
 
-add_filter( 'updated_option', 'Sl_Updated_Option_cache', 10, 3 );
+add_filter( 'updated_option', 'sl_updated_option_cache', 10, 3 );

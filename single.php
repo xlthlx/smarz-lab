@@ -20,7 +20,7 @@ while ( have_posts() ) :
 	<?php if ( get_post_thumbnail_id() ) { ?>
 			<picture class="col-auto d-none d-lg-block pb-5">
 
-		<?php 
+		<?php
 		echo wp_get_attachment_image(
 			get_post_thumbnail_id(),
 			'large',
@@ -30,7 +30,7 @@ while ( have_posts() ) :
 				'alt'     => get_the_title(),
 				'loading' => false,
 			)
-		); 
+		);
 		?>
 			</picture>
 	<?php } ?>
@@ -49,14 +49,14 @@ while ( have_posts() ) :
 						<?php the_content(); ?>
 					</div>
 
-					<?php 
-					$cats = Sl_Get_The_terms( 'category' );
+					<?php
+					$cats = sl_get_the_terms( 'category' );
 
 					if ( is_home() || is_front_page() ) {
-						$cats = Sl_Get_The_terms( 'category', true );
+						$cats = sl_get_the_terms( 'category', true );
 					}
 
-					if ( '' !== $cats ) { 
+					if ( '' !== $cats ) {
 						?>
 						<ul class="list-unstyled ml-0 pl-0 pt-4">
 						<?php echo $cats; ?>
@@ -72,7 +72,7 @@ while ( have_posts() ) :
 				</section>
 
 				<section id="comment-form" class="comment-box">
-					<?php Sl_Comment_form(); ?>
+					<?php sl_comment_form(); ?>
 				</section>
 			</div>
 

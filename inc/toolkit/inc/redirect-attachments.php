@@ -14,7 +14,7 @@
  *
  * @return void
  */
-function Sl_Attachment_Pages_redirect() {
+function sl_attachment_pages_redirect() {
 	global $post;
 
 	if ( is_attachment() ) {
@@ -27,4 +27,4 @@ function Sl_Attachment_Pages_redirect() {
 	}
 }
 
-add_action( 'template_redirect', 'Sl_Attachment_Pages_redirect' );
+add_action( 'template_redirect', 'sl_attachment_pages_redirect' );

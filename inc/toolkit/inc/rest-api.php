@@ -20,7 +20,7 @@ function sl_disable_wp_rest_api( $access ) {
 	if ( ! is_user_logged_in() ) {
 		$message = apply_filters(
 			'disable_wp_rest_api_error',
-			__( 'REST API restricted to authenticated users.', 'xlthlx' )
+			__( 'REST API restricted to authenticated users.', 'smarz-lab' )
 		);
 
 		return new WP_Error(

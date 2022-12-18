@@ -9,9 +9,9 @@
  * @link     https://smarz-lab.com/
  */
 
-global $wp_query;
 get_header();
-$paged = ( get_query_var( 'paged' ) ) ?: 1;
+global $wp_query;
+$home_paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 ?>
 	<div class="container">
 		<div class="row">
@@ -21,7 +21,7 @@ $paged = ( get_query_var( 'paged' ) ) ?: 1;
 			</div>
 			<div class="col-md-8">
 
-				<?php 
+				<?php
 				if ( have_posts() ) {
 					while ( have_posts() ) {
 						the_post();
@@ -29,7 +29,7 @@ $paged = ( get_query_var( 'paged' ) ) ?: 1;
 						get_template_part( 'parts/tease' );
 
 					}
-				} 
+				}
 				?>
 
 			</div>
@@ -43,6 +43,6 @@ $paged = ( get_query_var( 'paged' ) ) ?: 1;
 		</div>
 
 	</div>
-<?php Sl_pagination( $wp_query, $paged ); ?>
+<?php sl_pagination( $wp_query, $home_paged ); ?>
 <?php
 get_footer();

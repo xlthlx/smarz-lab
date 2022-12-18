@@ -9,12 +9,13 @@
  * @link     https://smarz-lab.com/
  */
 
-if ( false === ( $ebay_items = get_transient( 'ebay_items' ) ) ) {
-	$ebay_items = getAllItems();
+get_header();
+
+$ebay_items = get_transient( 'ebay_items' );
+if ( false === $ebay_items ) {
+	$ebay_items = sl_get_ebay_all_items();
 	set_transient( 'ebay_items', $ebay_items, 12 * HOUR_IN_SECONDS );
 }
-
-get_header();
 ?>
 <?php
 while ( have_posts() ) :

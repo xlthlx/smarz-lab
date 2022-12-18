@@ -11,14 +11,14 @@
 
 add_action( 'wp_head', 'ob_start', 1, 0 );
 $wp_login_php = false;
-$Sl_login     = 'entra';
+$sl_login     = 'entra';
 
 /**
  * Check if an url uses trailing slashes.
  *
  * @return bool
  */
-function Sl_Use_Trailing_slashes() {
+function sl_use_trailing_slashes() {
 	return '/' === substr( get_option( 'permalink_structure' ), - 1, 1 );
 }
 
@@ -29,8 +29,8 @@ function Sl_Use_Trailing_slashes() {
  *
  * @return string
  */
-function Sl_User_trailingslashit( $string ) {
-	return Sl_Use_Trailing_slashes() ? trailingslashit( $string ) : untrailingslashit( $string );
+function sl_user_trailingslashit( $string ) {
+	return sl_use_trailing_slashes() ? trailingslashit( $string ) : untrailingslashit( $string );
 }
 
 /**
@@ -38,14 +38,14 @@ function Sl_User_trailingslashit( $string ) {
  *
  * @return void
  */
-function Sl_Plugins_loaded() {
-	global $pagenow,$Sl_login,$wp_login_php;
+function sl_plugins_loaded() {
+	global $pagenow,$sl_login,$wp_login_php;
 
 	$request = parse_url( $_SERVER['REQUEST_URI'] );
 
 	if ( ! is_admin() && ( strpos( $_SERVER['REQUEST_URI'], 'wp-login.php' ) !== false || ( isset( $request['path'] ) && untrailingslashit( $request['path'] ) === site_url( 'wp-login', 'relative' ) ) ) ) {
 		$wp_login_php           = true;
-		$_SERVER['REQUEST_URI'] = Sl_User_trailingslashit(
+		$_SERVER['REQUEST_URI'] = sl_user_trailingslashit(
 			'/' . str_repeat(
 				'-/',
 				10
@@ -55,7 +55,7 @@ function Sl_Plugins_loaded() {
      $pagenow = 'index.php';
      // @codingStandardsIgnoreEnd
 
-	} elseif ( ( ! get_option( 'permalink_structure' ) && isset( $_GET['Sl_login'] ) && empty( $_GET['Sl_login'] ) ) || ( isset( $request['path'] ) && untrailingslashit( $request['path'] ) === home_url( $Sl_login, 'relative' ) ) ) {
+	} elseif ( ( ! get_option( 'permalink_structure' ) && isset( $_GET['Sl_login'] ) && empty( $_GET['Sl_login'] ) ) || ( isset( $request['path'] ) && untrailingslashit( $request['path'] ) === home_url( $sl_login, 'relative' ) ) ) {
 
      // @codingStandardsIgnoreStart
      $pagenow = 'wp-login.php';
@@ -63,14 +63,14 @@ function Sl_Plugins_loaded() {
 	}
 }
 
-add_action( 'after_setup_theme', 'Sl_Plugins_loaded', 1 );
+add_action( 'after_setup_theme', 'sl_plugins_loaded', 1 );
 
 /**
  * Redirects to 404 the wp-admin folder if user is not logged in.
  *
  * @return void
  */
-function Sl_Wp_loaded() {
+function sl_wp_loaded() {
 	global $pagenow,$wp_login_php;
 
 	if ( ! defined( 'DOING_AJAX' ) && is_admin() && ! is_user_logged_in() ) {
@@ -83,8 +83,8 @@ function Sl_Wp_loaded() {
 
 	$request = parse_url( $_SERVER['REQUEST_URI'] );
 
-	if ( 'wp-login.php' === $pagenow && Sl_User_trailingslashit( $request['path'] ) !== $request['path'] && get_option( 'permalink_structure' ) ) {
-		wp_safe_redirect( Sl_User_trailingslashit( Sl_New_Login_url() ) . ( ! empty( $_SERVER['QUERY_STRING'] ) ? '?' . $_SERVER['QUERY_STRING'] : '' ) );
+	if ( 'wp-login.php' === $pagenow && sl_user_trailingslashit( $request['path'] ) !== $request['path'] && get_option( 'permalink_structure' ) ) {
+		wp_safe_redirect( sl_user_trailingslashit( sl_new_login_url() ) . ( ! empty( $_SERVER['QUERY_STRING'] ) ? '?' . $_SERVER['QUERY_STRING'] : '' ) );
 		die;
 	}
 
@@ -99,12 +99,12 @@ function Sl_Wp_loaded() {
 			if ( ! empty( $referer['key'] ) && is_wp_error( $result ) && ( $result->get_error_code() === 'already_active'
 				|| $result->get_error_code() === 'blog_taken' )
 			) {
-				wp_safe_redirect( Sl_New_Login_url() . ( ! empty( $_SERVER['QUERY_STRING'] ) ? '?' . $_SERVER['QUERY_STRING'] : '' ) );
+				wp_safe_redirect( sl_new_login_url() . ( ! empty( $_SERVER['QUERY_STRING'] ) ? '?' . $_SERVER['QUERY_STRING'] : '' ) );
 				die;
 			}
 		}
 
-		Sl_Wp_Template_loader();
+		sl_wp_template_loader();
 	} elseif ( 'wp-login.php' === $pagenow ) {
 
 		include ABSPATH . 'wp-login.php';
@@ -112,14 +112,14 @@ function Sl_Wp_loaded() {
 	}
 }
 
-add_action( 'wp_loaded', 'Sl_Wp_loaded' );
+add_action( 'wp_loaded', 'sl_wp_loaded' );
 
 /**
  * No idea.
  *
  * @return void
  */
-function Sl_Wp_Template_loader() {
+function sl_wp_template_loader() {
 	global $pagenow;
 
 	// @codingStandardsIgnoreStart
@@ -132,8 +132,8 @@ function Sl_Wp_Template_loader() {
 
 	wp();
 
-	if ( Sl_User_trailingslashit( str_repeat( '-/', 10 ) ) === $_SERVER['REQUEST_URI'] ) {
-		$_SERVER['REQUEST_URI'] = Sl_User_trailingslashit( '/wp-login-php/' );
+	if ( sl_user_trailingslashit( str_repeat( '-/', 10 ) ) === $_SERVER['REQUEST_URI'] ) {
+		$_SERVER['REQUEST_URI'] = sl_user_trailingslashit( '/wp-login-php/' );
 	}
 
 	include_once ABSPATH . WPINC . '/template-loader.php';
@@ -149,7 +149,7 @@ function Sl_Wp_Template_loader() {
  *
  * @return string
  */
-function Sl_Filter_Wp_Login_php( $url, $scheme = null ) {
+function sl_filter_wp_login_php( $url, $scheme = null ) {
 	if ( strpos( $url, 'wp-login.php' ) !== false ) {
 		if ( is_ssl() ) {
 			$scheme = 'https';
@@ -159,9 +159,9 @@ function Sl_Filter_Wp_Login_php( $url, $scheme = null ) {
 
 		if ( isset( $args[1] ) ) {
 			parse_str( $args[1], $args );
-			$url = add_query_arg( $args, Sl_New_Login_url( $scheme ) );
+			$url = add_query_arg( $args, sl_new_login_url( $scheme ) );
 		} else {
-			$url = Sl_New_Login_url( $scheme );
+			$url = sl_new_login_url( $scheme );
 		}
 	}
 
@@ -177,11 +177,11 @@ function Sl_Filter_Wp_Login_php( $url, $scheme = null ) {
  *
  * @return string
  */
-function Sl_Site_url( $url, $path, $scheme ) {
-	return Sl_Filter_Wp_Login_php( $url, $scheme );
+function sl_site_url( $url, $path, $scheme ) {
+	return sl_filter_wp_login_php( $url, $scheme );
 }
 
-add_filter( 'site_url', 'Sl_Site_url', 10, 4 );
+add_filter( 'site_url', 'sl_site_url', 10, 4 );
 
 /**
  * Redirects to the login.
@@ -190,11 +190,11 @@ add_filter( 'site_url', 'Sl_Site_url', 10, 4 );
  *
  * @return string
  */
-function Sl_Wp_redirect( $location ) {
-	return Sl_Filter_Wp_Login_php( $location );
+function sl_wp_redirect( $location ) {
+	return sl_filter_wp_login_php( $location );
 }
 
-add_filter( 'wp_redirect', 'Sl_Wp_redirect' );
+add_filter( 'wp_redirect', 'sl_wp_redirect' );
 
 /**
  * Sets new login url.
@@ -203,14 +203,14 @@ add_filter( 'wp_redirect', 'Sl_Wp_redirect' );
  *
  * @return string
  */
-function Sl_New_Login_url( $scheme = null ) {
-	global $Sl_login;
+function sl_new_login_url( $scheme = null ) {
+	global $sl_login;
 	if ( get_option( 'permalink_structure' ) ) {
-		return Sl_User_trailingslashit(
+		return sl_user_trailingslashit(
 			home_url(
 				'/',
 				$scheme
-			) . $Sl_login
+			) . $sl_login
 		);
 	}
 
@@ -224,17 +224,17 @@ function Sl_New_Login_url( $scheme = null ) {
  *
  * @return string|string[]
  */
-function Sl_Welcome_email( $value ) {
-	global $Sl_login;
+function sl_welcome_email( $value ) {
+	global $sl_login;
 
 	return str_replace(
 		'wp-login.php',
-		trailingslashit( $Sl_login['Sl_login'] ),
+		trailingslashit( $sl_login['Sl_login'] ),
 		$value
 	);
 }
 
-add_filter( 'site_option_welcome_email', 'Sl_Welcome_email' );
+add_filter( 'site_option_welcome_email', 'sl_welcome_email' );
 
 /**
  * Removes the 'admin-bar' class from body.
@@ -244,7 +244,7 @@ add_filter( 'site_option_welcome_email', 'Sl_Welcome_email' );
  *
  * @return array
  */
-function Sl_Admin_Bar_Body_class( $wp_classes, $extra_classes ) { 
+function sl_admin_bar_body_class( $wp_classes, $extra_classes ) {
 	if ( ( is_404() ) && ( ! is_user_logged_in() ) ) {
 		$wp_nobar_classes = array_diff( $wp_classes, array( 'admin-bar' ) );
 
@@ -256,6 +256,6 @@ function Sl_Admin_Bar_Body_class( $wp_classes, $extra_classes ) {
 
 }
 
-add_filter( 'body_class', 'Sl_Admin_Bar_Body_class', 10, 2 );
+add_filter( 'body_class', 'sl_admin_bar_body_class', 10, 2 );
 
 remove_action( 'template_redirect', 'wp_redirect_admin_locations', 1000 );

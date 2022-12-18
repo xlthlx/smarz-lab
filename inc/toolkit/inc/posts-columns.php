@@ -16,7 +16,7 @@
  *
  * @return array
  */
-function Sl_Posts_columns( $columns ) {
+function sl_posts_columns( $columns ) {
 	 $post_type = get_post_type();
 	if ( 'post' === $post_type ) {
 		unset( $columns['date'] );
@@ -24,9 +24,9 @@ function Sl_Posts_columns( $columns ) {
 		$columns = array_merge(
 			$columns,
 			array(
-				'thumbs'   => __( 'Thumbnail', 'xlthlx' ),
-				'modified' => __( 'Data ultima modifica', 'xlthlx' ),
-				'date'     => __( 'Date', 'xlthlx' ),
+				'thumbs'   => __( 'Thumbnail', 'smarz-lab' ),
+				'modified' => __( 'Last modified', 'smarz-lab' ),
+				'date'     => __( 'Date', 'smarz-lab' ),
 			)
 		);
 	}
@@ -42,7 +42,7 @@ function Sl_Posts_columns( $columns ) {
  *
  * @return void
  */
-function Sl_Posts_Custom_columns( $column_name, $id ) {
+function sl_posts_custom_columns( $column_name, $id ) {
 	if ( 'thumbs' === $column_name ) {
 		echo get_the_post_thumbnail( $id, 'thumbnail' );
 	}
@@ -55,6 +55,6 @@ function Sl_Posts_Custom_columns( $column_name, $id ) {
 }
 
 if ( is_admin() ) {
-	add_filter( 'manage_posts_columns', 'Sl_Posts_columns', 999999 );
-	add_action( 'manage_posts_custom_column', 'Sl_Posts_Custom_columns', 999999, 2 );
+	add_filter( 'manage_posts_columns', 'sl_posts_columns', 999999 );
+	add_action( 'manage_posts_custom_column', 'sl_posts_custom_columns', 999999, 2 );
 }
