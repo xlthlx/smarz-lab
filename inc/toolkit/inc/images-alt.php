@@ -17,7 +17,7 @@
  * @return string The post content filtered.
  */
 function sl_add_image_alt( $content ) {
-	 global $post;
+	global $post;
 
 	if ( null === $post ) {
 		return $content;
@@ -42,6 +42,9 @@ function sl_add_image_alt( $content ) {
 				$attachment = get_post( $attachment[0] );
 				$alt        = get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true );
 				$title      = $attachment->post_title;
+				$post_title = get_post_field( 'post_title', $post->ID );
+
+				$new_img = str_replace( '<img', '<img alt="' . $post_title . '"', $images[0][ $index ] );
 
 				if ( '' !== $alt ) {
 					$new_img = str_replace(
@@ -49,22 +52,14 @@ function sl_add_image_alt( $content ) {
 						'<img alt="' . $alt . '"',
 						$images[0][ $index ]
 					);
-				} else {
-					if ( '' !== $title ) {
-						$new_img = str_replace(
-							'<img',
-							'<img alt="' . $title . '"',
-							$images[0][ $index ]
-						);
-					} else {
-						$post_title = get_the_title( $post->ID );
+				}
 
-						$new_img = str_replace(
-							'<img',
-							'<img alt="' . $post_title . '"',
-							$images[0][ $index ]
-						);
-					}
+				if ( '' === $alt && '' !== $title ) {
+					$new_img = str_replace(
+						'<img',
+						'<img alt="' . $title . '"',
+						$images[0][ $index ]
+					);
 				}
 
 				$content = str_replace( $images[0][ $index ], $new_img, $content );
@@ -100,7 +95,6 @@ function sl_change_image_attr( $attr, $attachment ) {
 			$attr['alt'] = $title;
 		}
 	}
-
 
 	return $attr;
 }
