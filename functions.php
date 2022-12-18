@@ -12,7 +12,7 @@
 /**
  * Load vendors.
  */
-require_once 'vendor.phar';
+ require_once dirname(__FILE__). '/vendor.phar';
 
 add_filter( 'login_display_language_dropdown', '__return_false' );
 add_filter( 'wpcf7_load_js', '__return_false' );
@@ -127,32 +127,32 @@ function sl_add_to_globals() {
 
 add_action( 'after_setup_theme', 'sl_add_to_globals' );
 
-if ( file_exists( 'inc/cmb2/cmb2/init.php' ) ) {
-	include_once 'inc/cmb2/cmb2/init.php';
+if ( file_exists( dirname(__FILE__). '/inc/cmb2/cmb2/init.php' ) ) {
+	include_once dirname(__FILE__). '/inc/cmb2/cmb2/init.php';
 }
 
 /**
  * Functions which enhance the theme by hooking into WordPress.
  */
-require_once 'inc/template-functions.php';
+ require_once dirname(__FILE__). '/inc/template-functions.php';
 
 /**
  * Theme options.
  */
-require_once 'inc/template-options.php';
+ require_once dirname(__FILE__). '/inc/template-options.php';
 
 /**
  * Custom template tags.
  */
-require_once 'inc/template-tags.php';
+ require_once dirname(__FILE__). '/inc/template-tags.php';
 
 /**
  * EBay API.
  */
-require_once 'inc/ebay/index.php';
+ require_once dirname(__FILE__). '/inc/ebay/index.php';
 
 /**
  * Toolkit.
  */
-require_once 'inc/toolkit/index.php';
+ require_once dirname(__FILE__). '/inc/toolkit/index.php';
 
