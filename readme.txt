@@ -23,6 +23,7 @@ Smarz Lab is the theme used by [smarz-lab.com](https://smarz-lab.com) website.
 
 - [Bootstrap 5](https://github.com/twbs/bootstrap/releases/tag/v5.1.3)
 - [CMB2](https://github.com/CMB2/CMB2)
+- [eBay SDK for PHP](https://github.com/BenMorel/ebay-sdk-php)
 - [John Billion's Extended CPTS library](https://github.com/johnbillion/extended-cpts)
 
 
