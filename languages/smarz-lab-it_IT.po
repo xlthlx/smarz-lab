@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smarz Lab 2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/smarz-lab\n"
-"POT-Creation-Date: 2023-01-14T20:36:57+00:00\n"
-"PO-Revision-Date: 2023-01-14 20:40+0000\n"
+"POT-Creation-Date: 2023-01-15T12:51:53+00:00\n"
+"PO-Revision-Date: 2023-01-15 12:54+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -77,30 +77,34 @@ msgid "DevId"
 msgstr "DevId"
 
 #: inc/template-options.php:68
+msgid "Seller"
+msgstr "Venditore"
+
+#: inc/template-options.php:76
 msgid "AppId"
 msgstr "AppId"
 
-#: inc/template-options.php:79
+#: inc/template-options.php:87
 msgid "CertId"
 msgstr "CertId"
 
-#: inc/template-options.php:90
+#: inc/template-options.php:98
 msgid "RuName"
 msgstr "Nome della RuName"
 
-#: inc/template-options.php:102 inc/template-options.php:109
+#: inc/template-options.php:110 inc/template-options.php:117
 msgid "Products Options"
 msgstr "Opzioni Prodotti"
 
-#: inc/template-options.php:106
+#: inc/template-options.php:114
 msgid "Update"
 msgstr "Aggiorna"
 
-#: inc/template-options.php:115
+#: inc/template-options.php:123
 msgid "Update products from eBay?"
 msgstr "Aggiornare prodotti da eBay?"
 
-#: inc/template-options.php:119
+#: inc/template-options.php:127
 msgid "Yes"
 msgstr "Si"
 
@@ -164,3 +168,7 @@ msgstr "Homepage"
 #. Template Name of the theme
 msgid "Shop"
 msgstr "Shop"
+
+#: templates/shop.php:40 templates/shop.php:47
+msgid "See details on eBay"
+msgstr "Guarda i dettagli su eBay"

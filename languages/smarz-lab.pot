@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-14T20:36:57+00:00\n"
+"POT-Creation-Date: 2023-01-15T12:51:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: smarz-lab\n"
@@ -77,31 +77,35 @@ msgid "DevId"
 msgstr ""
 
 #: inc/template-options.php:68
+msgid "Seller"
+msgstr ""
+
+#: inc/template-options.php:76
 msgid "AppId"
 msgstr ""
 
-#: inc/template-options.php:79
+#: inc/template-options.php:87
 msgid "CertId"
 msgstr ""
 
-#: inc/template-options.php:90
+#: inc/template-options.php:98
 msgid "RuName"
 msgstr ""
 
-#: inc/template-options.php:102
-#: inc/template-options.php:109
+#: inc/template-options.php:110
+#: inc/template-options.php:117
 msgid "Products Options"
 msgstr ""
 
-#: inc/template-options.php:106
+#: inc/template-options.php:114
 msgid "Update"
 msgstr ""
 
-#: inc/template-options.php:115
+#: inc/template-options.php:123
 msgid "Update products from eBay?"
 msgstr ""
 
-#: inc/template-options.php:119
+#: inc/template-options.php:127
 msgid "Yes"
 msgstr ""
 
@@ -172,4 +176,9 @@ msgstr ""
 
 #. Template Name of the theme
 msgid "Shop"
+msgstr ""
+
+#: templates/shop.php:40
+#: templates/shop.php:47
+msgid "See details on eBay"
 msgstr ""

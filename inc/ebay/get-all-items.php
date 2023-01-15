@@ -23,6 +23,7 @@ use DTS\eBaySDK\Finding\Types;
 function sl_get_ebay_all_items() {
 	global $config;
 	$return = array();
+	$options = get_option( 'smarz_theme_options' );
 
 	// @codingStandardsIgnoreStart
 	$service = new Services\FindingService(
@@ -36,7 +37,7 @@ function sl_get_ebay_all_items() {
 	$request->itemFilter[] = new Types\ItemFilter(
 		array(
 			'name'  => 'Seller',
-			'value' => array( 'a.pigeons' ),
+			'value' => array( $options['seller'] ),
 		)
 	);
 
@@ -57,14 +58,14 @@ function sl_get_ebay_all_items() {
 	if ( $response->ack != 'Failure' ) {
 
 		$total            = $response->paginationOutput->totalEntries;
-		$return['Totale'] = $total;
-		$return['Pagine'] = $response->paginationOutput->totalPages;
+		$return['total'] = $total;
+		$return['pages'] = $response->paginationOutput->totalPages;
 
 		if ( $total !== 0 ) {
 			foreach ( $response->searchResult->item as $item ) {
 
 				$object                               = sl_get_ebay_item( $item );
-				$return['Pagina'][1][ $item->itemId ] = $object;
+				$return['page'][1][ $item->itemId ] = $object;
 
 			}
 		}
@@ -81,7 +82,7 @@ function sl_get_ebay_all_items() {
 			foreach ( $response->searchResult->item as $item ) {
 
 				$object                                        = sl_get_ebay_item( $item );
-				$return['Pagina'][ $pageNum ][ $item->itemId ] = $object;
+				$return['page'][ $pageNum ][ $item->itemId ] = $object;
 			}
 		}
 	}
@@ -102,29 +103,29 @@ function sl_get_ebay_item( $item ) {
 
 	// @codingStandardsIgnoreStart
 
-	$object['Titolo'] = $item->title;
+	$object['title'] = $item->title;
 
 	if ( isset( $item->sellingStatus->currentPrice ) ) {
-		$object['Prezzo'] = '&euro; ' . $item->sellingStatus->currentPrice->value;
+		$object['price'] = '&euro; ' . $item->sellingStatus->currentPrice->value;
 	}
 
 	if ( isset( $item->galleryURL ) ) {
-		$object['Immagine'] = str_replace( 's-l140', 's-l500', $item->galleryURL );
+		$object['image'] = str_replace( 's-l140', 's-l500', $item->galleryURL );
 	}
 
 	if ( isset( $item->viewItemURL ) ) {
-		$object['Link'] = $item->viewItemURL;
+		$object['link'] = $item->viewItemURL;
 	}
 
 	if ( isset( $item->condition ) ) {
-		$object['Stato'] = $item->condition->conditionDisplayName;
+		$object['condition'] = $item->condition->conditionDisplayName;
 	}
 
 	if ( isset( $item->location ) ) {
-		$object['Luogo'] = $item->location;
+		$object['location'] = $item->location;
 	}
 
-	$object['Debug'] = '<pre>' . print_r( $item, true ) . '</pre><br/><br/>';
+	$object['debug'] = '<pre>' . print_r( $item, true ) . '</pre><br/><br/>';
 
 	// @codingStandardsIgnoreEnd
 

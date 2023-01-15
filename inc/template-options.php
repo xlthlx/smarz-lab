@@ -65,6 +65,14 @@ function sl_register_theme_options() {
 
 	$cmb_options->add_field(
 		array(
+			'name'       => esc_html__( 'Seller', 'smarz-lab' ),
+			'id'         => 'seller',
+			'type'       => 'text',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
 			'name'       => esc_html__( 'AppId', 'smarz-lab' ),
 			'id'         => 'appId',
 			'type'       => 'text',

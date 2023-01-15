@@ -32,19 +32,19 @@ while ( have_posts() ) :
 				</div>
 
 				<div class="row row-cols-1 row-cols-md-3 g-4">
-					<?php foreach ( $ebay_items['Pagina'] as $item ) { ?>
+					<?php foreach ( $ebay_items['page'] as $item ) { ?>
 						<?php foreach ( $item as $card ) { ?>
-							<?php if ( isset( $card['Titolo'] ) ) { ?>
+							<?php if ( isset( $card['title'] ) ) { ?>
 								<div class="col">
 									<div class="card h-100">
-										<a title="Guarda i dettagli su eBay" href="<?php echo $card['Link']; ?>" target="_blank">
-											<img alt="<?php echo $card['Titolo']; ?>" src="<?php echo $card['Immagine']; ?>"/>
+										<a title="<?php echo esc_html__( 'See details on eBay', 'smarz-lab' ); ?>" href="<?php echo $card['link']; ?>" target="_blank">
+											<img alt="<?php echo $card['title']; ?>" src="<?php echo $card['image']; ?>"/>
 										</a>
 										<div class="card-body">
-											<h5 class="card-title"><?php echo $card['Titolo']; ?></h5>
+											<h5 class="card-title"><?php echo $card['title']; ?></h5>
 										</div>
 										<div class="card-footer">
-											<a title="Guarda i dettagli su eBay" href="<?php echo $card['Link']; ?>" target="_blank">Guarda i dettagli su eBay</a>
+											<a title="<?php echo esc_html__( 'See details on eBay', 'smarz-lab' ); ?>" href="<?php echo $card['link']; ?>" target="_blank"><?php echo esc_html__( 'See details on eBay', 'smarz-lab' ); ?></a>
 										</div>
 									</div>
 								</div>
