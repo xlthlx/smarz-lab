@@ -54,20 +54,20 @@ function sl_register_theme_options() {
 
 	$cmb_options->add_field(
 		array(
+			'name'       => esc_html__( 'Seller', 'smarz-lab' ),
+			'id'         => 'seller',
+			'type'       => 'text',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
 			'name'       => esc_html__( 'DevId', 'smarz-lab' ),
 			'id'         => 'devId',
 			'type'       => 'text',
 			'attributes' => array(
 				'type' => 'password',
 			),
-		)
-	);
-
-	$cmb_options->add_field(
-		array(
-			'name'       => esc_html__( 'Seller', 'smarz-lab' ),
-			'id'         => 'seller',
-			'type'       => 'text',
 		)
 	);
 
