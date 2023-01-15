@@ -34,7 +34,8 @@ Smarz Lab is the theme used by [smarz-lab.com](https://smarz-lab.com) website.
 
 ## Copyright
 
-Smarz Lab Theme, (C) 2020-2023 smarz-lab.com 
+Smarz Lab Theme, (&copy;) 2023 smarz-lab.com
+
 Smarz Lab is distributed under the terms of the GNU GPL.
 
 This program is free software: you can redistribute it and/or modify
