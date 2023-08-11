@@ -10,19 +10,6 @@
  */
 
 /**
- * Remove the very annoying jQuery Migrate notice.
- *
- * @return void
- */
-function sl_remove_jquery_migrate_notice() {
-	$m                    = $GLOBALS['wp_scripts']->registered['jquery-migrate'];
-	$m->extra['before'][] = 'sl_logconsole = window.console.log; window.console.log=null;';
-	$m->extra['after'][]  = 'window.console.log=sl_logconsole;';
-}
-
-add_action( 'init', 'sl_remove_jquery_migrate_notice', 5 );
-
-/**
  * Hide SEO settings meta box for posts.
  *
  * @return void
