@@ -8,14 +8,21 @@
 # Do NOT ignore .distignore
 !.distignore
 
+# Do NOT ignore .readme.md
+!README.md
+
 # Do NOT ignore .circleci
 !.circleci
+
+# Do NOT ignore .wp-env.json
+!.wp-env.json
 
 # Ignore all files that start with ~
 ~*
 
 # Ignore packaged files
 *.7z
+*.csv
 *.dmg
 *.gz
 *.iso
@@ -23,10 +30,13 @@
 *.rar
 *.tar
 *.zip
+*.sql
+*.tar.gz
 
 # Ignore OS generated files
 ehthumbs.db
 Thumbs.db
+.DS_Store
 
 # Ignore log files
 *.log
@@ -34,9 +44,12 @@ Thumbs.db
 # Ignore lock files
 *.lock
 
-# Ignore build Tools
+# Build Tools
 .idea
 package-lock.json
 /node_modules
-/_root
 /vendor
+
+# Project specific
+/_root
+/content
