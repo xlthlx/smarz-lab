@@ -12,6 +12,7 @@ composer.lock
 package.json
 package-lock.json
 README.md
+src
 .wp-env.json
 
 # Ignore packaged files
