@@ -1,5 +1,6 @@
 {
   "core":  null,
+  "phpVersion": "8.1",
   "themes": [ "." ],
   "plugins": [
     "https://downloads.wordpress.org/plugin/akismet.zip",
