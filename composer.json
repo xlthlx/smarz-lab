@@ -15,18 +15,18 @@
 	}
   ],
   "require": {
-	"cmb2/cmb2": "^2.10",
+	"cmb2/cmb2": "^2.11",
 	"johnbillion/extended-cpts": "^5.0",
-	"benmorel/ebay-sdk-php": "^19.0"
+	"benmorel/ebay-sdk-php": "^19.3"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
 	"wptrt/wpthemereview": "^0.2.1",
-	"php-parallel-lint/php-parallel-lint": "^1.2.0",
-	"wp-cli/i18n-command": "^2.2.5",
+	"php-parallel-lint/php-parallel-lint": "^1.4.0",
+	"wp-cli/i18n-command": "^2.6.5",
 	"dxw/phar-install": "^1.1.2",
-	"wpreadme2markdown/wp2md": "^4.0.2"
+	"wpreadme2markdown/wp2md": "^4.1.2"
   },
   "scripts": {
 	"lint:wpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs --ignore=vendor/*,node_modules/*,inc/cmb2/*,_root/* --extensions=php . -n -v --report-file=report.txt",
