@@ -14,10 +14,10 @@ $options = get_option( 'smarz_theme_options' );
 return array(
 	'production' => array(
 		'credentials' => array(
-			'devId'  => $options['devId'],
+			'seller' => $options['seller'],
 			'appId'  => $options['appId'],
 			'certId' => $options['certId'],
 		),
-		'ruName'      => $options['ruName'],
+		'categories'  => $options['categories'],
 	),
 );

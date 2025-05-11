@@ -10,13 +10,13 @@
  */
 
 /**
- * Get all items.
+ *  Get all items.
  *
- * @throws JsonException Exception.
+ * @return array $return Array of items.
  */
-function sl_get_ebay_all_items(): array {
+function sl_get_ebay_all_items() {
 	global $config;
-	$return  = array();
+	$return = array();
 
 	// Get the access token.
 	$hash        = base64_encode( $config['production']['credentials']['appId'] . ':' . $config['production']['credentials']['certId'] );
@@ -34,40 +34,30 @@ function sl_get_ebay_all_items(): array {
 	);
 
 	$response = wp_remote_post( $oauth_url, $options );
-	$response = wp_remote_retrieve_body( $response );
-	$response = json_decode( $response, false, 512, JSON_THROW_ON_ERROR );
 
-	$access_token = $response->access_token;
+	if ( is_wp_error( $response ) ) {
+		$error_message = $response->get_error_message();
+		echo 'Something went wrong: ' . esc_attr( $error_message );
+	} else {
 
-	// Request to the Browse API.
-	$url      = 'https://api.ebay.com/buy/browse/v1/item_summary/search?category_ids=58058&filter=sellers:{a.pigeons}&fieldgroups=EXTENDED&limit=9&offset=0';
-	$response = wp_remote_get(
-		$url,
-		array(
-			'headers' => array(
-				'Authorization'           => 'Bearer ' . $access_token,
-				'X-EBAY-C-MARKETPLACE-ID' => 'EBAY_IT',
-			),
-		)
-	);
+		$response = wp_remote_retrieve_body( $response );
+		$response = json_decode( $response, false );
 
-	$response = json_decode( $response['body'], false, 512, JSON_THROW_ON_ERROR );
-	$total    = $response->total;
-	$pages    = round( (int) $total / 9 );
+		$access_token = $response->access_token;
 
-	$return['total'] = $total;
-	$return['pages'] = $pages;
+		$prod_cats  = array( '58058' );
+		$categories = $config['production']['categories'];
 
-	if ( $total !== 0 ) {
-		foreach ( $response->itemSummaries as $item ) {
-			$object                             = sl_get_ebay_item( $item );
-			$return['page'][1][ $item->itemId ] = $object;
+		if ( ! empty( $categories ) ) {
+			$prod_cats = explode( ',', $categories );
 		}
 
-		for ( $pageNum = 2; $pageNum <= $pages; $pageNum ++ ) {
-			$offset = ( $pageNum - 1 ) * 9;
+		$total = 0;
 
-			$url      = 'https://api.ebay.com/buy/browse/v1/item_summary/search?category_ids=58058&filter=sellers:{a.pigeons}&fieldgroups=EXTENDED&limit=9&offset=' . $offset;
+		foreach ( $prod_cats as $category ) {
+			// Request to the Browse API.
+			$seller   = $config['production']['credentials']['seller'];
+			$url      = 'https://api.ebay.com/buy/browse/v1/item_summary/search?category_ids=' . $category . '&filter=sellers:{' . $seller . '}&fieldgroups=EXTENDED&limit=9&offset=0';
 			$response = wp_remote_get(
 				$url,
 				array(
@@ -78,12 +68,46 @@ function sl_get_ebay_all_items(): array {
 				)
 			);
 
-			$response = json_decode( $response['body'], false, 512, JSON_THROW_ON_ERROR );
+			if ( is_array( $response ) && ! is_wp_error( $response ) ) {
+				$response = json_decode( $response['body'], false );
+				$total    = $total + (int) $response->total;
+				$pages    = round( (int) $total / 9 );
 
-			foreach ( $response->itemSummaries as $item ) {
-				$object                                      = sl_get_ebay_item( $item );
-				$return['page'][ $pageNum ][ $item->itemId ] = $object;
-			}       
+				$return['total'] = $total;
+				$return['pages'] = $pages;
+
+				if ( 0 !== $total ) {
+					foreach ( $response->itemSummaries as $item ) {
+						$object                           = sl_get_ebay_item( $item );
+						$return['items'][ $item->itemId ] = $object;
+					}
+
+					for ( $pageNum = 2; $pageNum <= $pages; $pageNum ++ ) {
+						$offset = ( $pageNum - 1 ) * 9;
+
+						$url      = 'https://api.ebay.com/buy/browse/v1/item_summary/search?category_ids=' . $category . '&filter=sellers:{' . $seller . '}&fieldgroups=EXTENDED&limit=9&offset=' . $offset;
+						$response = wp_remote_get(
+							$url,
+							array(
+								'headers' => array(
+									'Authorization' => 'Bearer ' . $access_token,
+									'X-EBAY-C-MARKETPLACE-ID' => 'EBAY_IT',
+								),
+							)
+						);
+
+						$response = json_decode( $response['body'], false );
+
+						foreach ( $response->itemSummaries as $item ) {
+							$object                           = sl_get_ebay_item( $item );
+							$return['items'][ $item->itemId ] = $object;
+						}
+					}
+				}
+			} else {
+				$error_message = $response->get_error_message();
+				echo 'Something went wrong: ' . esc_attr( $error_message );
+			}
 		}
 	}
 

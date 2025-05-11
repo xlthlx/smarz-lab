@@ -21,34 +21,42 @@ if ( false === $ebay_items ) {
 while ( have_posts() ) :
 	the_post();
 	?>
-	<article class="post-type-<?php echo get_post_type(); ?>" id="post-<?php echo get_the_ID(); ?>">
+	<article class="post-type-<?php echo esc_attr( get_post_type() ); ?>" id="post-<?php echo get_the_ID(); ?>">
 		<section class="page-content">
-			<h1 class="display-5 pb-3"><?php echo get_the_title(); ?></h1>
+			<h1 class="display-5 pb-3"><?php echo esc_attr( get_the_title() ); ?></h1>
 			<hr class="pt-0 mt-0 mb-4"/>
 
 			<div class="row">
 				<div class="col-md-12">
 					<?php the_content(); ?>
+					<!--<?php echo esc_attr( $ebay_items['total'] ); ?>-->
 				</div>
 
 				<div class="row row-cols-1 row-cols-md-3 g-4">
-					<?php foreach ( $ebay_items['page'] as $item ) { ?>
-						<?php foreach ( $item as $card ) { ?>
-							<?php if ( isset( $card['title'] ) ) { ?>
-								<div class="col">
-									<div class="card h-100">
-										<a title="<?php echo esc_html__( 'See details on eBay', 'smarz-lab' ); ?>" href="<?php echo $card['link']; ?>" target="_blank">
-											<img alt="<?php echo $card['title']; ?>" src="<?php echo $card['image']; ?>"/>
+					<?php
+					foreach ( $ebay_items['items'] as $card ) {
+						?>
+						<?php if ( isset( $card['title'] ) ) { ?>
+							<div class="col">
+								<div class="card h-100">
+									<a title="<?php echo esc_html__( 'See details on eBay', 'smarz-lab' ); ?>" href="<?php echo esc_url( $card['link'] ); ?>" target="_blank">
+										<img alt="<?php echo esc_attr( $card['title'] ); ?>" src="<?php echo esc_url( $card['image'] ); ?>"/>
+									</a>
+									<div class="card-body">
+										<h5 class="card-title"><?php echo esc_attr( $card['title'] ); ?></h5>
+										<?php
+										if ( isset( $card['description'] ) ) {
+											echo '<p class="small">' . esc_attr( $card['description'] ) . '</p>';
+										}
+										?>
+									</div>
+									<div class="card-footer">
+										<a title="<?php echo esc_html__( 'See details on eBay', 'smarz-lab' ); ?>" href="<?php echo esc_url( $card['link'] ); ?>" target="_blank">
+											<?php echo esc_html__( 'See details on eBay', 'smarz-lab' ); ?>
 										</a>
-										<div class="card-body">
-											<h5 class="card-title"><?php echo $card['title']; ?></h5>
-										</div>
-										<div class="card-footer">
-											<a title="<?php echo esc_html__( 'See details on eBay', 'smarz-lab' ); ?>" href="<?php echo $card['link']; ?>" target="_blank"><?php echo esc_html__( 'See details on eBay', 'smarz-lab' ); ?></a>
-										</div>
 									</div>
 								</div>
-							<?php } ?>
+							</div>
 						<?php } ?>
 					<?php } ?>
 				</div>

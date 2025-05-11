@@ -62,22 +62,11 @@ function sl_register_theme_options() {
 
 	$cmb_options->add_field(
 		array(
-			'name'       => esc_html__( 'DevId', 'smarz-lab' ),
-			'id'         => 'devId',
-			'type'       => 'text',
-			'attributes' => array(
-				'type' => 'password',
-			),
-		)
-	);
-
-	$cmb_options->add_field(
-		array(
 			'name'       => esc_html__( 'AppId', 'smarz-lab' ),
 			'id'         => 'appId',
 			'type'       => 'text',
 			'attributes' => array(
-				'type' => 'password',
+				'type' => 'text',
 			),
 		)
 	);
@@ -88,18 +77,18 @@ function sl_register_theme_options() {
 			'id'         => 'certId',
 			'type'       => 'text',
 			'attributes' => array(
-				'type' => 'password',
+				'type' => 'text',
 			),
 		)
 	);
 
 	$cmb_options->add_field(
 		array(
-			'name'       => esc_html__( 'RuName', 'smarz-lab' ),
-			'id'         => 'ruName',
+			'name'       => esc_html__( 'Categories', 'smarz-lab' ),
+			'id'         => 'categories',
 			'type'       => 'text',
 			'attributes' => array(
-				'type' => 'password',
+				'type' => 'text',
 			),
 		)
 	);
@@ -142,6 +131,7 @@ add_action( 'cmb2_admin_init', 'sl_register_theme_options' );
  * @param mixed  $value The new option value.
  *
  * @return void
+ * @throws JsonException Exception.
  */
 function sl_updated_option_cache( $option, $old_value, $value ) {
 	if ( ( 'smarz_theme_product_options' === $option ) && isset( $value['smarz_cache'][0] ) && ( 'yes' === $value['smarz_cache'][0] ) ) {
