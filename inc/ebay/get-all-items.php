@@ -82,8 +82,8 @@ function sl_get_ebay_all_items() {
 						$return['items'][ $item->itemId ] = $object;
 					}
 
-					for ( $pageNum = 2; $pageNum <= $pages; $pageNum ++ ) {
-						$offset = ( $pageNum - 1 ) * 9;
+					for ( $page_number = 2; $page_number <= $pages; $page_number ++ ) {
+						$offset = ( $page_number - 1 ) * 9;
 
 						$url      = 'https://api.ebay.com/buy/browse/v1/item_summary/search?category_ids=' . $category . '&filter=sellers:{' . $seller . '}&fieldgroups=EXTENDED&limit=9&offset=' . $offset;
 						$response = wp_remote_get(
@@ -121,7 +121,7 @@ function sl_get_ebay_all_items() {
  *
  * @return array
  */
-function sl_get_ebay_item( $item ): array {
+function sl_get_ebay_item( $item ) {
 
 	$object           = array();
 	$object['itemId'] = $item->itemId;

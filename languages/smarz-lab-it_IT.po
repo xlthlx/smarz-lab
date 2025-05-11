@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smarz Lab 2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/smarz-lab\n"
-"POT-Creation-Date: 2023-01-15T12:51:53+00:00\n"
-"PO-Revision-Date: 2023-01-15 12:57+0000\n"
+"POT-Creation-Date: 2025-05-11T16:34:56+00:00\n"
+"PO-Revision-Date: 2025-05-11 17:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -13,26 +13,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Domain: smarz-lab\n"
 
 #. Theme Name of the theme
+#: style.css
 msgid "Smarz Lab"
 msgstr "Smarz Lab"
 
 #. Theme URI of the theme
+#: style.css
 msgid "https://smarz-lab.com/"
 msgstr "https://smarz-lab.com/"
 
 #. Description of the theme
+#: style.css
 msgid "Theme for Smarz Lab"
 msgstr "Tema per Smarz Lab"
 
 #. Author of the theme
+#: style.css
 msgid "xlthlx"
 msgstr "xlthlx"
 
 #. Author URI of the theme
+#: style.css
 msgid "https://xlthlx.com/"
 msgstr "https://xlthlx.com/"
 
@@ -73,38 +78,34 @@ msgid "API Options"
 msgstr "Opzioni API"
 
 #: inc/template-options.php:57
-msgid "DevId"
-msgstr "DevId"
-
-#: inc/template-options.php:68
 msgid "Seller"
 msgstr "Venditore"
 
-#: inc/template-options.php:76
+#: inc/template-options.php:65
 msgid "AppId"
 msgstr "AppId"
 
-#: inc/template-options.php:87
+#: inc/template-options.php:76
 msgid "CertId"
 msgstr "CertId"
 
-#: inc/template-options.php:98
-msgid "RuName"
-msgstr "RuName"
+#: inc/template-options.php:87
+msgid "Categories"
+msgstr "Categorie"
 
-#: inc/template-options.php:110 inc/template-options.php:117
+#: inc/template-options.php:99 inc/template-options.php:106
 msgid "Products Options"
 msgstr "Opzioni Prodotti"
 
-#: inc/template-options.php:114
+#: inc/template-options.php:103
 msgid "Update"
 msgstr "Aggiorna"
 
-#: inc/template-options.php:123
+#: inc/template-options.php:112
 msgid "Update products from eBay?"
 msgstr "Aggiornare prodotti da eBay?"
 
-#: inc/template-options.php:127
+#: inc/template-options.php:116
 msgid "Yes"
 msgstr "Si"
 
@@ -169,6 +170,12 @@ msgstr "Homepage"
 msgid "Shop"
 msgstr "Shop"
 
-#: templates/shop.php:40 templates/shop.php:47
+#: templates/shop.php:42 templates/shop.php:54 templates/shop.php:55
 msgid "See details on eBay"
 msgstr "Guarda i dettagli su eBay"
+
+#~ msgid "DevId"
+#~ msgstr "DevId"
+
+#~ msgid "RuName"
+#~ msgstr "RuName"
