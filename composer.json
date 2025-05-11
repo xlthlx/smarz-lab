@@ -16,8 +16,7 @@
   ],
   "require": {
 	"cmb2/cmb2": "^2.11",
-	"johnbillion/extended-cpts": "^5.0",
-	"benmorel/ebay-sdk-php": "^19.3"
+	"johnbillion/extended-cpts": "^5.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",

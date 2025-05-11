@@ -9,85 +9,83 @@
  * @link     https://smarz-lab.com/
  */
 
-// @codingStandardsIgnoreStart
-use DTS\eBaySDK\Constants;
-use DTS\eBaySDK\Finding\Services;
-use DTS\eBaySDK\Finding\Types;
-// @codingStandardsIgnoreEnd
-
 /**
  * Get all items.
  *
- * @return array
+ * @throws JsonException Exception.
  */
-function sl_get_ebay_all_items() {
+function sl_get_ebay_all_items(): array {
 	global $config;
-	$return = array();
-	$options = get_option( 'smarz_theme_options' );
+	$return  = array();
 
-	// @codingStandardsIgnoreStart
-	$service = new Services\FindingService(
+	// Get the access token.
+	$hash        = base64_encode( $config['production']['credentials']['appId'] . ':' . $config['production']['credentials']['certId'] );
+	$oauth_url   = 'https://api.ebay.com/identity/v1/oauth2/token';
+	$post_fields = 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope';
+
+	$options = array(
+		'body'        => $post_fields,
+		'headers'     => array(
+			'Authorization' => 'Basic ' . $hash,
+		),
+		'method'      => 'POST',
+		'httpversion' => '1.0',
+		'sslverify'   => false,
+	);
+
+	$response = wp_remote_post( $oauth_url, $options );
+	$response = wp_remote_retrieve_body( $response );
+	$response = json_decode( $response, false, 512, JSON_THROW_ON_ERROR );
+
+	$access_token = $response->access_token;
+
+	// Request to the Browse API.
+	$url      = 'https://api.ebay.com/buy/browse/v1/item_summary/search?category_ids=58058&filter=sellers:{a.pigeons}&fieldgroups=EXTENDED&limit=9&offset=0';
+	$response = wp_remote_get(
+		$url,
 		array(
-			'credentials' => $config['production']['credentials'],
-			'globalId'    => Constants\GlobalIds::IT,
+			'headers' => array(
+				'Authorization'           => 'Bearer ' . $access_token,
+				'X-EBAY-C-MARKETPLACE-ID' => 'EBAY_IT',
+			),
 		)
 	);
 
-	$request               = new Types\FindItemsAdvancedRequest();
-	$request->itemFilter[] = new Types\ItemFilter(
-		array(
-			'name'  => 'Seller',
-			'value' => array( $options['seller'] ),
-		)
-	);
+	$response = json_decode( $response['body'], false, 512, JSON_THROW_ON_ERROR );
+	$total    = $response->total;
+	$pages    = round( (int) $total / 9 );
 
-	$request->sortOrder = 'CurrentPriceHighest';
+	$return['total'] = $total;
+	$return['pages'] = $pages;
 
-	$request->paginationInput                 = new Types\PaginationInput();
-	$request->paginationInput->entriesPerPage = 9;
-	$request->paginationInput->pageNumber     = 1;
-
-	$response = $service->findItemsAdvanced( $request );
-
-	if ( isset( $response->errorMessage ) ) {
-		foreach ( $response->errorMessage->error as $error ) {
-			$return['error'][ $error->message ] = $error->message;
+	if ( $total !== 0 ) {
+		foreach ( $response->itemSummaries as $item ) {
+			$object                             = sl_get_ebay_item( $item );
+			$return['page'][1][ $item->itemId ] = $object;
 		}
-	}
 
-	if ( $response->ack != 'Failure' ) {
+		for ( $pageNum = 2; $pageNum <= $pages; $pageNum ++ ) {
+			$offset = ( $pageNum - 1 ) * 9;
 
-		$total            = $response->paginationOutput->totalEntries;
-		$return['total'] = $total;
-		$return['pages'] = $response->paginationOutput->totalPages;
+			$url      = 'https://api.ebay.com/buy/browse/v1/item_summary/search?category_ids=58058&filter=sellers:{a.pigeons}&fieldgroups=EXTENDED&limit=9&offset=' . $offset;
+			$response = wp_remote_get(
+				$url,
+				array(
+					'headers' => array(
+						'Authorization'           => 'Bearer ' . $access_token,
+						'X-EBAY-C-MARKETPLACE-ID' => 'EBAY_IT',
+					),
+				)
+			);
 
-		if ( $total !== 0 ) {
-			foreach ( $response->searchResult->item as $item ) {
+			$response = json_decode( $response['body'], false, 512, JSON_THROW_ON_ERROR );
 
-				$object                               = sl_get_ebay_item( $item );
-				$return['page'][1][ $item->itemId ] = $object;
-
-			}
-		}
-	}
-
-	$limit = $response->paginationOutput->totalPages;
-	for ( $pageNum = 2; $pageNum <= $limit; $pageNum ++ ) {
-		$request->paginationInput->pageNumber = $pageNum;
-
-		$response = $service->findItemsAdvanced( $request );
-
-		if ( $response->ack != 'Failure' ) {
-
-			foreach ( $response->searchResult->item as $item ) {
-
-				$object                                        = sl_get_ebay_item( $item );
+			foreach ( $response->itemSummaries as $item ) {
+				$object                                      = sl_get_ebay_item( $item );
 				$return['page'][ $pageNum ][ $item->itemId ] = $object;
-			}
+			}       
 		}
 	}
-
-	// @codingStandardsIgnoreEnd
 
 	return $return;
 }
@@ -95,39 +93,36 @@ function sl_get_ebay_all_items() {
 /**
  * Get single item.
  *
- * @param Types\SearchItem $item Single item.
+ * @param object $item Single item.
  *
  * @return array
  */
-function sl_get_ebay_item( $item ) {
+function sl_get_ebay_item( $item ): array {
 
-	// @codingStandardsIgnoreStart
+	$object           = array();
+	$object['itemId'] = $item->itemId;
+	$object['title']  = $item->title;
 
-	$object['title'] = $item->title;
-
-	if ( isset( $item->sellingStatus->currentPrice ) ) {
-		$object['price'] = '&euro; ' . $item->sellingStatus->currentPrice->value;
+	if ( isset( $item->price ) ) {
+		$price           = str_replace( array( '.', ',00' ), array( ',', '' ), $item->price->value );
+		$object['price'] = '&euro; ' . $price;
 	}
 
-	if ( isset( $item->galleryURL ) ) {
-		$object['image'] = str_replace( 's-l140', 's-l500', $item->galleryURL );
+	if ( isset( $item->thumbnailImages ) ) {
+		$object['image'] = $item->thumbnailImages[0]->imageUrl;
 	}
 
-	if ( isset( $item->viewItemURL ) ) {
-		$object['link'] = $item->viewItemURL;
+	if ( isset( $item->itemWebUrl ) ) {
+		$object['link'] = $item->itemWebUrl;
 	}
 
 	if ( isset( $item->condition ) ) {
-		$object['condition'] = $item->condition->conditionDisplayName;
+		$object['condition'] = $item->condition;
 	}
 
-	if ( isset( $item->location ) ) {
-		$object['location'] = $item->location;
+	if ( isset( $item->shortDescription ) ) {
+		$object['description'] = $item->shortDescription;
 	}
-
-	$object['debug'] = '<pre>' . print_r( $item, true ) . '</pre><br/><br/>';
-
-	// @codingStandardsIgnoreEnd
 
 	return $object;
 }
