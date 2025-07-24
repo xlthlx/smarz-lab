@@ -29,7 +29,11 @@ while ( have_posts() ) :
 			<div class="row">
 				<div class="col-md-12">
 					<?php the_content(); ?>
-					<?php echo esc_attr( $ebay_items['total'] ); ?>
+					<?php
+					if ( 0 === $ebay_items['total'] ) {
+						echo '<p>Non ci sono articoli in questo momento.</p>';
+					}
+					?>
 				</div>
 
 				<div class="row row-cols-1 row-cols-md-3 g-4">
